@@ -1,0 +1,15 @@
+# 本地克隆的框架源码（上游仓库，不属于本项目产物）
+lerobot/
+
+# 大文件与训练产物（权重走 HuggingFace Hub 私有仓库，见 README）
+*.safetensors
+*.bin
+checkpoints/
+artifacts/
+hf_cache/
+
+# 运行时垃圾
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
