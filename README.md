@@ -11,7 +11,7 @@
 | 耗时 | **4h 50m**（2.16 s/step，双卡 100%） |
 | loss | 1.14 → ~0.5（flow matching MSE） |
 | 可训练参数 | 100M / 450M（冻结 VLM 骨干，官方 preset） |
-| 成功率 | M2 协议评测进行中 |
+| 成功率 | **74%**（Wilson 95% CI [63.0%, 83.2%]，100 episodes / 10 任务）— 论文 90% @ 25× 训练预算 |
 | **模型权重** | 🤖 [A2bao/smolvla-libero-spatial](https://huggingface.co/A2bao/smolvla-libero-spatial)（私有仓库，checkpoint-008000 + 全套训练状态） |
 
 ## 为什么是这套组合
