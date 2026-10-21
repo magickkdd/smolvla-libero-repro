@@ -1,0 +1,28 @@
+{
+ "total_successes": 80,
+ "total_episodes": 100,
+ "success_rate": 0.8,
+ "wilson_95_ci": [
+  0.71,
+  0.866
+ ],
+ "true_updates": 16000,
+ "per_task": {
+  "0": 8,
+  "1": 9,
+  "2": 10,
+  "3": 10,
+  "4": 8,
+  "5": 2,
+  "6": 10,
+  "7": 10,
+  "8": 6,
+  "9": 7
+ },
+ "paired_flips": {
+  "new_success": 14,
+  "lost": 8,
+  "net": 6
+ },
+ "note": "\u771f\u5b9e 16000 updates\uff1b\u4fee\u6b63\u81ea\u52a8\u6c47\u603b\u7684 35/50 \u53e3\u5f84\u9519\u8bef\uff08\u524d 5 \u4efb\u52a1\u5728\u4e0a\u4e00\u4f1a\u8bdd\uff09"
+}
