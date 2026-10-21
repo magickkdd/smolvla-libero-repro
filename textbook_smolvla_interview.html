@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SmolVLA 项目通关教材 · 具身智能 VLA 面试版</title>
+<style>
+:root{
+  --ink:#1b1f24; --muted:#5c6672; --line:#dfe4ea; --bg:#fff; --panel:#f7f9fc;
+  --accent:#1f5fbf; --accent-soft:#eaf1fb; --accent-line:#c7d9f3;
+  --warn:#8a5300; --warn-bg:#fff8ea; --ok:#1f6f4a; --ok-bg:#eef8f2;
+  --code-bg:#f3f5f8;
+  --serif:"Source Han Serif SC","Noto Serif CJK SC","Songti SC",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  --mono:"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.78;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-line)}
+a:hover{border-bottom-color:var(--accent)}
+code{font-family:var(--mono);font-size:.86em;background:var(--code-bg);padding:.12em .35em;border-radius:4px;border:1px solid #e6eaf0}
+pre{font-family:var(--mono);font-size:12.5px;line-height:1.65;background:#0f1720;color:#dbe6f3;padding:18px 20px;border-radius:10px;overflow:auto;border:1px solid #24313f}
+pre code{background:none;border:0;padding:0;color:inherit;font-size:inherit}
+.wrap{display:grid;grid-template-columns:248px minmax(0,1fr);gap:56px;max-width:1140px;margin:0 auto;padding:0 30px}
+.cover{margin:0 0 64px;background:linear-gradient(160deg,#101923 0%,#16283d 55%,#1c3a57 100%);color:#f2f6fa;padding:72px 0 56px}
+.cover .inner{max-width:1140px;margin:0 auto;padding:0 30px}
+.cover .kicker{font-family:var(--sans);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#9fc0e4;margin-bottom:20px}
+.cover h1{font-family:var(--sans);font-size:40px;line-height:1.22;margin:0 0 16px;font-weight:700;letter-spacing:-.01em}
+.cover h1 em{font-style:normal;color:#8fc2ff}
+.cover .sub{font-size:17px;color:#c7d6e6;max-width:720px;margin:0 0 32px}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;border-top:1px solid rgba(255,255,255,.16);padding-top:20px}
+.meta div{font-family:var(--sans);font-size:12px;color:#9fb3c8}
+.meta b{display:block;font-size:15px;color:#eaf2fb;font-weight:600;margin-top:3px}
+.pitch{margin-top:30px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-left:3px solid #8fc2ff;padding:18px 22px;border-radius:0 8px 8px 0;font-size:15px;color:#dce8f4}
+.pitch b{color:#fff}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:34px 0 60px;font-family:var(--sans);font-size:12.5px;line-height:1.55}
+.side .side-title{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.side ol{list-style:none;margin:0 0 22px;padding:0}
+.side a{display:block;color:#3d4854;border:0;padding:4px 8px;border-radius:5px}
+.side a:hover{background:var(--accent-soft);color:var(--accent)}
+.side .part{font-weight:700;color:#111820;margin-top:16px;font-size:12px;padding-left:8px}
+.side .chap{padding-left:22px;color:#59636f}
+article{padding:34px 0 100px;min-width:0}
+.part-open{margin:8px 0 6px;padding:26px 0 8px;border-top:3px solid var(--ink)}
+.part-open .pnum{font-family:var(--sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.part-open h2{font-size:30px;margin:4px 0 6px;border:0;padding:0}
+.part-open p{margin:0;color:var(--muted);font-size:15px}
+h2{font-family:var(--sans);font-size:25px;line-height:1.35;margin:64px 0 8px;padding-top:8px;letter-spacing:-.01em;page-break-after:avoid}
+h3{font-family:var(--sans);font-size:18px;line-height:1.45;margin:34px 0 8px;page-break-after:avoid}
+h4{font-family:var(--sans);font-size:15px;margin:24px 0 6px;color:#26313d;page-break-after:avoid}
+.chnum{font-family:var(--sans);font-size:11px;letter-spacing:.16em;color:var(--accent);font-weight:700;margin-top:56px}
+.chnum + h2{margin-top:4px}
+.lead{font-size:16.5px;color:#38434f;margin:6px 0 22px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+p{margin:0 0 15px}
+ul,ol{margin:0 0 16px;padding-left:24px}
+li{margin:0 0 7px}
+.muted{color:var(--muted)}
+.tag{display:inline-block;font-family:var(--sans);font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:999px;vertical-align:2px;margin-left:4px;border:1px solid}
+.t-src{color:#1f5fbf;background:#edf4fe;border-color:#c9dcf7}
+.t-exp{color:#1f6f4a;background:#eef8f2;border-color:#c6e6d5}
+.t-paper{color:#6b3fa0;background:#f4eefb;border-color:#ddcdf1}
+.t-inf{color:#8a5300;background:#fff8ea;border-color:#eed9b5}
+.box{border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--panel);padding:16px 20px;border-radius:0 8px 8px 0;margin:22px 0;page-break-inside:avoid}
+.box .bt{font-family:var(--sans);font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.box.warn{border-left-color:#c98a1b;background:var(--warn-bg)}
+.box.warn .bt{color:var(--warn)}
+.box.ok{border-left-color:#2f8a5f;background:var(--ok-bg)}
+.box.ok .bt{color:var(--ok)}
+.box p:last-child,.box ul:last-child{margin-bottom:0}
+.derive{background:#fbfcfe;border:1px solid var(--line);border-radius:8px;padding:18px 22px;margin:22px 0;page-break-inside:avoid}
+.derive .dt{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.1em;color:#6b3fa0;text-transform:uppercase;margin-bottom:8px}
+.derive p:last-child{margin-bottom:0}
+.example{background:#fcfdfb;border:1px solid #dfe9df;border-radius:8px;padding:16px 20px;margin:22px 0;page-break-inside:avoid}
+.example .et{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.1em;color:#2f6b47;text-transform:uppercase;margin-bottom:6px}
+.exercise{border:1px dashed #b9c6d6;border-radius:8px;padding:14px 20px;margin:20px 0;background:#fbfcfe}
+.exercise .xt{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.1em;color:#3c5a7a;text-transform:uppercase;margin-bottom:4px}
+details{margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+summary{cursor:pointer;font-family:var(--sans);font-size:13px;color:var(--accent);font-weight:600;outline:none}
+details[open] summary{margin-bottom:8px}
+math{font-size:1.02em}
+math[display="block"]{display:block;margin:14px auto;text-align:center;overflow-x:auto;padding:4px 0}
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:8px;background:#fff}
+table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:13px;line-height:1.6}
+th,td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{background:#f2f5f9;font-weight:700;color:#26313d;font-size:12px;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+caption{caption-side:top;text-align:left;font-family:var(--sans);font-size:12px;color:var(--muted);padding:8px 12px;background:#fafbfd;border-bottom:1px solid var(--line)}
+.mgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}
+.mcard{border:1px solid var(--line);border-radius:8px;padding:14px 16px;background:#fff}
+.mcard .mv{font-family:var(--sans);font-size:24px;font-weight:700;letter-spacing:-.02em;color:var(--accent);line-height:1.2}
+.mcard .ml{font-family:var(--sans);font-size:11.5px;color:var(--muted);margin-top:2px}
+.bars{margin:18px 0}
+.bar{display:grid;grid-template-columns:86px 1fr 92px;align-items:center;gap:10px;font-family:var(--sans);font-size:12px;margin:5px 0}
+.bar .tr{height:14px;background:#eef2f7;border-radius:3px;overflow:hidden}
+.bar .fl{height:100%;background:linear-gradient(90deg,#5d93dd,#1f5fbf);border-radius:3px}
+.bar .fl.low{background:linear-gradient(90deg,#e0a34a,#c07716)}
+.bar .vv{font-family:var(--mono);font-size:11.5px;color:#3d4854;text-align:right}
+.q{border:1px solid var(--line);border-radius:10px;margin:18px 0;background:#fff;overflow:hidden;page-break-inside:avoid}
+.q .qh{display:grid;grid-template-columns:44px 1fr;background:#f7f9fc;border-bottom:1px solid var(--line)}
+.q .qn{font-family:var(--sans);font-size:13px;font-weight:800;color:var(--accent);display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line)}
+.q .qt{font-family:var(--sans);font-size:14.5px;font-weight:700;padding:11px 16px;line-height:1.5}
+.q .qb{padding:13px 16px 14px}
+.q .lbl{font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:8px 0 2px}
+.q .lbl:first-child{margin-top:0}
+.q p{margin:0 0 8px;font-size:14.4px;line-height:1.72}
+.q ul{margin:2px 0 8px;padding-left:20px}
+.q li{font-size:14.2px;margin:0 0 4px;line-height:1.65}
+.trap{background:#fff8ea;border-left:3px solid #c98a1b;padding:8px 12px;border-radius:0 6px 6px 0;font-size:13.8px;color:#5c4214;margin-top:8px}
+.kv{display:grid;grid-template-columns:150px 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:18px 0;font-size:14px}
+.kv div{padding:8px 14px;border-bottom:1px solid var(--line)}
+.kv div:nth-child(odd){background:#f7f9fc;font-family:var(--sans);font-size:12.5px;font-weight:600;color:#3d4854}
+.foot{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);font-family:var(--sans);font-size:12px;color:var(--muted)}
+.cheat{border:2px solid #16283d;border-radius:10px;padding:20px 24px;margin:24px 0;background:#fbfcfe;page-break-inside:avoid}
+.cheat h3{margin-top:0}
+.cheat .cols{columns:2;column-gap:34px}
+.cheat p{font-size:13.5px;margin:0 0 7px;break-inside:avoid}
+.cheat code{font-size:11.5px}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+@media (max-width:980px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 20px}
+  .side{display:none}
+  .cover{padding:52px 0 40px}
+  .cover h1{font-size:31px}
+  .meta{grid-template-columns:repeat(2,1fr)}
+  .mgrid{grid-template-columns:1fr}
+  .cheat .cols{columns:1}
+  .kv{grid-template-columns:1fr}
+}
+@media print{
+  .side{display:none}
+  .wrap{display:block;max-width:none;padding:0}
+  article{padding:0}
+  .cover{background:#fff;color:#000;padding:0 0 24px;border-bottom:2px solid #000}
+  .cover .kicker,.cover .sub,.meta div,.meta b{color:#333}
+  .pitch{background:#f4f4f4;color:#000;border-color:#999}
+  h2{page-break-before:always}
+  .part-open h2{page-break-before:avoid}
+  a{color:#000;border:0}
+  pre{background:#f4f4f4;color:#111;border:1px solid #ccc}
+  .q,.box,.derive,.example,.exercise,.cheat{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header class="cover">
+  <div class="inner">
+    <div class="kicker">Embodied AI · Vision-Language-Action · Interview Textbook</div>
+    <h1>从 SmolVLA 复现到面试现场<br><em>一份能“讲清楚”的项目教材</em></h1>
+    <p class="sub">以本仓库的 M1 训练 + M2 评测为主线，向上补 VLA 与流匹配的数学，向下钻到 attention mask、loss 分母、KV cache 与 LIBERO 协议，向外连接 π0 / OpenVLA / RT-2 的设计取舍。每一章都可直接转成面试回答。</p>
+    <div class="meta">
+      <div>项目<b>SmolVLA × LIBERO Spatial</b></div>
+      <div>结果<b>74% · 100 rollouts</b></div>
+      <div>预算<b>8k updates · 2×T4</b></div>
+      <div>版本<b>lerobot 0.6.2 @146d8474</b></div>
+    </div>
+    <div class="pitch"><b>30 秒电梯陈述：</b>我在免费的 Kaggle 双 T4 上，用 8000 次更新（有效 batch 64）复现了 450M 的 SmolVLA 在 LIBERO-Spatial 上的微调，官方评测协议下 10 任务 × 10 episode 的成功率是 74%（Wilson 95% CI 约 [64.6%, 81.6%]）。我重点解决了三件事：Turing 卡没有 bf16 的精度迁移、无交互环境下的断点续训与产物抢救、以及评测协议与论文严格对齐。结论是方法在低成本下可用，剩余差距主要来自训练预算与硬件精度路径，而不是实现错误。</div>
+  </div>
+</header>
+
+<div class="wrap">
+<nav class="side" aria-label="目录">
+  <p class="side-title">目录</p>
+  <ol>
+    <li><a href="#howto">如何使用本书</a></li>
+    <li class="part">第一部分 · 先修</li>
+    <li class="chap"><a href="#c1">1 VLA 的问题定义</a></li>
+    <li class="chap"><a href="#c2">2 流匹配的最小数学</a></li>
+    <li class="chap"><a href="#c3">3 Transformer 与掩码</a></li>
+    <li class="part">第二部分 · 架构与工程</li>
+    <li class="chap"><a href="#c4">4 代码地图与数据流</a></li>
+    <li class="chap"><a href="#c5">5 配置系统与训练循环</a></li>
+    <li class="chap"><a href="#c6">6 评测入口与统计</a></li>
+    <li class="chap"><a href="#c7">7 零成本训练基础设施</a></li>
+    <li class="part">第三部分 · 模型逐层</li>
+    <li class="chap"><a href="#c8">8 VLM 骨干与 token 预算</a></li>
+    <li class="chap"><a href="#c9">9 动作专家</a></li>
+    <li class="chap"><a href="#c10">10 前向、损失与形状</a></li>
+    <li class="chap"><a href="#c11">11 推理与延迟</a></li>
+    <li class="part">第四部分 · 数据与训练</li>
+    <li class="chap"><a href="#c12">12 数据集与动作 chunk</a></li>
+    <li class="chap"><a href="#c13">13 LIBERO 环境包装</a></li>
+    <li class="chap"><a href="#c14">14 超参与数值稳定性</a></li>
+    <li class="chap"><a href="#c15">15 增强消融的实验设计</a></li>
+    <li class="chap"><a href="#c16">16 评测统计与功效</a></li>
+    <li class="part">第五部分 · 结果与对比</li>
+    <li class="chap"><a href="#c17">17 结果解读与归因</a></li>
+    <li class="chap"><a href="#c18">18 主流 VLA 横向对比</a></li>
+    <li class="chap"><a href="#c19">19 项目亮点与局限</a></li>
+    <li class="part">第六部分 · 面试实战</li>
+    <li class="chap"><a href="#c20">20 分层题库（25 题）</a></li>
+    <li class="chap"><a href="#c21">21 白板推导题</a></li>
+    <li class="chap"><a href="#c22">22 四周复现与深化计划</a></li>
+    <li class="part">附录</li>
+    <li class="chap"><a href="#a1">A 代码索引</a></li>
+    <li class="chap"><a href="#a2">B 证据台账</a></li>
+    <li class="chap"><a href="#a3">C 符号与术语</a></li>
+    <li class="chap"><a href="#a4">D 一页速查卡</a></li>
+  </ol>
+</nav>
+
+<article>
+
+<div class="chnum" id="howto">READ ME FIRST</div>
+<h2>如何使用本书</h2>
+<p class="lead">这不是项目 README 的扩写，而是一条“从能跑，到能讲，到能被追问”的学习路径。读完后你应该能在白板上画出数据流、推出流匹配损失、解释每一个 mask 与分母，并诚实地说出项目的边界。</p>
+
+<h3>读者假设</h3>
+<p>你熟悉 PyTorch、Transformer 的基本结构（Q/K/V、残差、LayerNorm），知道监督学习；但不需要事先懂 VLA、扩散模型或机器人仿真。数学只用到链式法则、高斯分布和余弦调度。若你连“注意力是加权求和”都还不熟，先补第 3 章，别跳。</p>
+
+<h3>证据分级（全书通用）</h3>
+<div class="tbl"><table>
+<tr><th>标记</th><th>含义</th><th>使用方式</th></tr>
+<tr><td><span class="tag t-src">源码</span></td><td>直接来自本仓库 lerobot 代码，可指到文件与行号</td><td>面试时最硬，优先引用</td></tr>
+<tr><td><span class="tag t-exp">实验</span></td><td>本项目真实跑出的日志/结果，含硬件与协议</td><td>说明“我做过”，但要给出 n 与条件</td></tr>
+<tr><td><span class="tag t-paper">论文</span></td><td>SmolVLA / SmolVLM2 / LIBERO 原文</td><td>用于对照，注意版本与阶段</td></tr>
+<tr><td><span class="tag t-inf">推断</span></td><td>基于代码或理论的合理推断，未直接验证</td><td>必须明说“这是我的推断”</td></tr>
+</table></div>
+
+<div class="box warn">
+<div class="bt">先修一门“诚实课”</div>
+<p>本仓库归档里有两个数字在面试中会被抓：<strong>①把论文的 200k 预训练步数当成微调预算</strong>（论文 §4.3 明确写的是仿真微调 100k steps @ bs64）；<strong>②Wilson 区间写成了 [63.0%, 83.2%]</strong>（标准公式复算 74/100 是 [64.6%, 81.6%]）。本书第 6、17 章会给出修正口径。面试时主动修正，比被追问后才发现更加分——它证明你真的懂统计与实验阶段，而不是背结论。</p>
+</div>
+
+<h3>六问六章映射</h3>
+<div class="tbl"><table>
+<caption>你的原始需求 → 本书位置 → 产出物</caption>
+<tr><th>需求</th><th>主读章节</th><th>读完能交付什么</th></tr>
+<tr><td>1）架构、模块、代码结构</td><td>第 4–5、8–11 章</td><td>一张数据流图 + 一张“概念→文件→行号”索引表</td></tr>
+<tr><td>2）原理、算法、实现细节</td><td>第 1–3、9–11 章</td><td>流匹配推导、mask 构造、loss 分母、KV cache 四条白板讲解</td></tr>
+<tr><td>3）数据、训练、推理全链路</td><td>第 5–7、12–14 章</td><td>从 parquet 到动作执行的逐步追踪，含 padding 与归一化</td></tr>
+<tr><td>4）与主流方案对比、亮点</td><td>第 17–19 章</td><td>一张 10 行对比表 + 3 个 STAR 故事</td></tr>
+<tr><td>5）追问、难点、应对</td><td>第 20–21 章</td><td>25 题分层答案 + 8 道白板题</td></tr>
+<tr><td>6）复现与深化计划</td><td>第 22 章</td><td>四周日程、命令、验收指标、阅读清单</td></tr>
+</table></div>
+
+<div class="box ok">
+<div class="bt">建议读法</div>
+<p><strong>第一遍（约 3 小时）</strong>：读每章 lead、图、表和“面试官想看什么”，建立骨架。<strong>第二遍（约 6 小时）</strong>：跟做推导与练习，打开源码对照行号。<strong>第三遍（面试前 1 天）</strong>：只看第 17、19、20、21 章和附录 D 速查卡。不要在第一遍纠结 head 数这种细节。</p>
+</div>
+
+<div class="part-open">
+  <div class="pnum">Part I</div>
+  <h2>先修：把 VLA 写成一个可计算的问题</h2>
+  <p>不理解目标函数，后面所有架构细节都只是名词。这一部分只做三件事：定义策略、推出训练目标、讲清注意力掩码。</p>
+</div>
+
+<div class="chnum" id="c1">CHAPTER 1</div>
+<h2>VLA 的问题定义：从观测到动作块</h2>
+<p class="lead">VLA 不是“让大模型聊天”，而是把视觉、语言、本体状态映射成一段连续动作。这个映射的输入输出形状、时间尺度与评测方式，决定了后面每一个设计选择。</p>
+
+<h3>1.1 形式化</h3>
+<p>在时刻 <code>t</code>，机器人收到观测 <code>o_t</code>（多路图像 + 本体状态）和语言指令 <code>ℓ</code>。策略输出未来 <code>H</code> 步的动作块：</p>
+<math display="block">
+<mi>π</mi><mo>(</mo><msub><mi>a</mi><mrow><mi>t</mi><mo>:</mo><mi>t</mi><mo>+</mo><mi>H</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>∣</mo><msub><mi>o</mi><mi>t</mi></msub><mo>,</mo><mi>ℓ</mi><mo>)</mo>
+</math>
+<p>本项目里 <code>H = chunk_size = 50</code>，动作维度 7（末端三维平移、三维旋转、夹爪），但模型内部统一 pad 到 32 维。LIBERO 控制频率约 20 Hz，所以一个 chunk 覆盖约 2.5 秒。评测时 <code>n_action_steps = 1</code>，即每执行 1 步就重新观测、重新预测；训练时一次监督全部 50 步。</p>
+
+<div class="box">
+<div class="bt">两个“步”不要混</div>
+<p><strong>update / step（优化步）</strong>：一次梯度更新。本项目 8000 次。<strong>action step（控制步）</strong>：仿真里执行一次动作。一次 update 用 64 个样本，每个样本含 50 个未来动作；一次评测 rollout 可能走 100–280 个控制步。面试里说“8000 步”必须补“updates”，否则会被理解为控制步。</p>
+</div>
+
+<h3>1.2 为什么是“动作块”而不是单步动作</h3>
+<p>单步策略 <code>π(a_t | o_t)</code> 在每个控制步都要前向一次大模型；更糟的是，示范数据中相邻动作高度相关，单步回归容易学到“平均动作”，在接触、抓取等多模态处失效。动作块同时解决三件事：</p>
+<ul>
+<li><strong>时间抽象</strong>：一次预测 50 步，降低推理频率；</li>
+<li><strong>多模态表达</strong>：整段轨迹作为生成目标，模型可以保留“向左绕”或“向右绕”两种模式，而不是平均成撞桌角；</li>
+<li><strong>减少复合误差</strong>：开环执行一小段，比每步独立决策更平滑；但开环太长又会失去反馈，所以 <code>n_action_steps</code> 是可调的执行视界。</li>
+</ul>
+
+<div class="example">
+<div class="et">算一笔账</div>
+<p>20 Hz 下，<code>chunk=50</code> 覆盖 2.5 s。若 <code>n_action_steps=50</code>，每 2.5 s 才前向一次，但 2.5 s 内看不到新观测；若 <code>n_action_steps=1</code>，每 50 ms 重规划一次，鲁棒但算力高 50 倍。LIBERO 是准静态桌面操作，论文与本项目都选 1，用算力换成功率与协议一致性；真机高频抓取则常用 5–20 的折中，或 RTC（实时 chunk）做重叠融合。</p>
+</div>
+
+<h3>1.3 训练目标：从最大似然到速度回归</h3>
+<p>示范数据给出 <code>(o_t, ℓ, a_{t:t+49})</code>。最直接的做法是回归 <code>‖π(o,ℓ) − a‖²</code>，但当同一观测对应多条合理轨迹时，条件分布的均值可能不是一条可行轨迹。SmolVLA 改用<strong>流匹配</strong>：不直接回归动作，而是回归“把噪声搬运到动作”的速度场。第 2 章会完整推导；这里先记住结论：</p>
+<math display="block">
+<mi>L</mi><mo>=</mo><msub><mi>𝔼</mi><mrow><mi>t</mi><mo>∼</mo><mi>p</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>,</mo><mi>ε</mi><mo>∼</mo><mi>𝒩</mi><mo>(</mo><mn>0</mn><mo>,</mo><mi>I</mi><mo>)</mo><mo>,</mo><mi>a</mi><mo>∼</mo><mi>𝒟</mi></mrow></msub>
+<mrow><mo>‖</mo><msub><mi>v</mi><mi>θ</mi></msub><mo>(</mo><msub><mi>x</mi><mi>t</mi></msub><mo>,</mo><mi>t</mi><mo>,</mo><mi>o</mi><mo>,</mo><mi>ℓ</mi><mo>)</mo><mo>−</mo><mo>(</mo><mi>ε</mi><mo>−</mo><mi>a</mi><mo>)</mo><mo>‖</mo></mrow><msup><mrow></mrow><mn>2</mn></msup>
+</math>
+<p>注意：生成的是整块 <code>50×32</code> 的动作张量，图像与语言只作为条件，不参与生成。这一点常被误解为“模型在生成图像”，面试时要立刻纠正。</p>
+
+<h3>1.4 评测指标</h3>
+<p>LIBERO 的成功率是二值结果的平均：每个任务固定若干初始状态，跑固定步数，环境给出 <code>check_success()</code>。本项目 10 个任务 × 10 个 episode = 100 次 rollout，报告总成功率与 Wilson 置信区间。单看 74% 没有意义，必须同时说清：任务数、每任务 episode 数、初始状态是否固定、<code>n_action_steps</code>、图像分辨率、是否 hard reset。第 16 章会解释为什么 100 个样本只能分辨“大差异”。</p>
+
+<div class="box warn">
+<div class="bt">面试官想看什么</div>
+<p>你说“成功率 74%”时，他在等三个补充：<strong>多少个 episode</strong>、<strong>置信区间</strong>、<strong>和论文是否同协议</strong>。主动给出这三点，可信度立刻不同。若只报一个百分数，会被认为是“跑了个脚本”。</p>
+</div>
+
+<div class="exercise">
+<div class="xt">练习 1.1 · 概念</div>
+<p>如果把 <code>n_action_steps</code> 从 1 改成 10，训练完全不变，评测成功率通常会怎样变化？为什么？请给出两个方向相反的机制。</p>
+<details><summary>参考答案</summary>
+<p><strong>可能下降</strong>：执行 10 步开环期间没有新观测，初始状态或接触误差会累积；LIBERO 的抓取对末端位置敏感，开环越久越容易偏。<strong>可能上升</strong>：预测的 50 步在训练分布内是连贯的，减少重规划可以避免每步独立采样带来的抖动与“犹豫”；同时推理次数降为 1/10，评测吞吐提高。净效应取决于任务动态与控制频率，必须实验。论文在仿真里选 1，是在“准确率优先”的设定下做的选择，不代表真机最优。</p>
+</details>
+</div>
+
+<div class="chnum" id="c2">CHAPTER 2</div>
+<h2>流匹配：10 步把噪声搬到动作</h2>
+<p class="lead">这一章只讲 SmolVLA 真正用到的那一小块：线性插值路径、速度目标、欧拉积分、时间采样。推导完整但不引入随机微分方程。</p>
+
+<h3>2.1 从“生成模型”到“学一个速度场”</h3>
+<p>设真实动作块 <code>a ∈ R^{50×32}</code>，噪声 <code>ε ∼ N(0,I)</code>。我们构造一条从噪声到动作的直线路径。本项目采用 <code>NOISE_AT_ONE</code> 约定：<code>t=1</code> 是纯噪声，<code>t=0</code> 是干净动作。</p>
+<math display="block">
+<msub><mi>x</mi><mi>t</mi></msub><mo>=</mo><mi>t</mi><mi>ε</mi><mo>+</mo><mo>(</mo><mn>1</mn><mo>−</mo><mi>t</mi><mo>)</mo><mi>a</mi><mo>,</mo><mspace width="12px"/><mi>t</mi><mo>∈</mo><mo>[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>]</mo>
+</math>
+<p>对 <code>t</code> 求导，得到沿路径恒定的速度：</p>
+<math display="block">
+<msub><mi>v</mi><mi>t</mi></msub><mo>=</mo><mfrac><mrow><mi>d</mi><msub><mi>x</mi><mi>t</mi></msub></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mi>ε</mi><mo>−</mo><mi>a</mi>
+</math>
+<p>于是训练目标变成：给定 <code>x_t</code>、<code>t</code> 和条件 <code>(o,ℓ)</code>，预测 <code>ε − a</code>。这是一个<strong>回归</strong>问题，不是对抗训练，也没有 ELBO。网络只需要学会“在这个噪声水平下，往哪个方向走、走多快”。</p>
+
+<div class="derive">
+<div class="dt">推导 · 为什么速度目标成立</div>
+<p>把 <code>x_t</code> 的定义代入：<code>x_t = a + t(ε−a)</code>，所以 <code>ε − a = (x_t − a)/t</code>。给定 <code>(x_t,t)</code> 时，<code>a</code> 的条件期望是 <code>E[a|x_t]</code>，而<strong>条件速度的期望</strong>满足 <code>E[ε−a | x_t] = (x_t − E[a|x_t])/t</code>。最小化 MSE 的最优解正是这个条件期望。也就是说，网络学到的不是某一条固定轨迹，而是“从当前点到动作流形的平均方向”；多模态由 <code>t</code> 较大时的分支结构保留，随着 <code>t→0</code> 收敛到某个模式。严格的一般性证明需要连续性方程，面试不必展开，但要知道“MSE 最优解 = 条件期望速度”这句话。</p>
+</div>
+
+<h3>2.2 训练算法</h3>
+<pre><code>for (o, l, a) in loader:                 # a: [B, 50, 32]
+    eps = randn_like(a)                  # 标准高斯
+    t   = Beta(1.5, 1.0).sample([B])     # 偏向 t=1（高噪声）
+    t   = t * 0.999 + 0.001              # 避开端点数值问题
+    x_t = t[:,None,None]*eps + (1-t)[:,None,None]*a
+    v   = eps - a
+    pred = policy(o, l, x_t, t)          # [B, 50, 32]
+    loss = masked_mse(pred, v, valid_steps)</code></pre>
+<p>时间采样用 <code>Beta(1.5, 1.0)</code>，均值 <code>1.5/2.5 = 0.6</code>，概率质量偏向高噪声端。直觉：高噪声时全局形态未定，学习信号更强；低噪声时只剩细节，且动作块在 <code>t≈0</code> 附近几乎相同，过多采样会浪费容量。这是一个可消融的设计点，面试若问“为什么不是均匀采样”，答“经验上高噪声更难、梯度更有信息量，Beta(1.5,1) 是论文/实现的选择，可用均匀分布做对照”。</p>
+
+<h3>2.3 推理：前向欧拉积分</h3>
+<p>从 <code>x_1 = ε</code> 出发，沿速度场走 <code>N=10</code> 步，每步 <code>Δt = −1/N</code>：</p>
+<math display="block">
+<msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mi>Δ</mi><mi>t</mi></mrow></msub><mo>=</mo><msub><mi>x</mi><mi>t</mi></msub><mo>−</mo><mi>Δ</mi><mi>t</mi><mo>⋅</mo><msub><mi>v</mi><mi>θ</mi></msub><mo>(</mo><msub><mi>x</mi><mi>t</mi></msub><mo>,</mo><mi>t</mi><mo>,</mo><mi>o</mi><mo>,</mo><mi>ℓ</mi><mo>)</mo>
+</math>
+<p>注意符号：因为 <code>t</code> 从 1 减到 0，<code>Δt</code> 是负数，所以代码里等价于 <code>x ← x - (1/N)·v</code>。如果误写成 <code>x + (1/N)·v</code>，动作会朝噪声方向爆炸——这是实现流匹配最常见的 bug。项目代码在 <code>euler_integrate</code> 里按约定处理方向，切换 <code>NOISE_AT_ZERO</code> 时会翻转符号，读代码时要确认约定。</p>
+
+<div class="example">
+<div class="et">一维手算</div>
+<p>设 <code>a=1.0</code>，<code>ε=−0.5</code>，<code>t=0.7</code>。则 <code>x=0.7×(−0.5)+0.3×1= −0.05</code>，<code>v=ε−a=−1.5</code>。走一步 <code>Δt=−0.1</code>：<code>x ← −0.05 − 0.1×(−1.5)=0.10</code>。解析解在 <code>t=0.6</code> 是 <code>0.6×(−0.5)+0.4×1=0.10</code>，完全一致。线性路径下，只要速度预测准确，欧拉积分没有离散误差；现实中的误差来自网络预测，而不是积分格式。</p>
+</div>
+
+<h3>2.4 与其他生成式动作头的对比</h3>
+<div class="tbl"><table>
+<tr><th>方案</th><th>训练目标</th><th>推理步数</th><th>优点</th><th>代价 / 风险</th></tr>
+<tr><td>直接回归（MSE）</td><td><code>‖π−a‖²</code></td><td>1</td><td>最快、最简单</td><td>多模态被平均，接触任务易失败</td></tr>
+<tr><td>离散 token + 自回归（RT-2/OpenVLA）</td><td>交叉熵</td><td>动作维度次（约 7 次）</td><td>复用 LLM 词表与预训练，天然多模态</td><td>量化误差；自回归延迟；动作维度受词表约束</td></tr>
+<tr><td>DDPM / DDIM 扩散</td><td>噪声预测 <code>ε</code></td><td>10–1000</td><td>表达力强，成熟</td><td>步数多；调度器敏感；实现复杂</td></tr>
+<tr><td>流匹配（SmolVLA/π0）</td><td>速度 <code>ε−a</code></td><td>10</td><td>直线路径、少步、训练稳定</td><td>仍需多步；对 <code>t</code> 采样与符号敏感</td></tr>
+</table></div>
+<p>一句话总结：<strong>流匹配 = 扩散的“直线化”版本</strong>。它保留了生成式多模态表达，又把推理压到 10 步，适合机器人 10–50 Hz 的控制预算（真机上仍需要动作专家并行/异步推理）。</p>
+
+<div class="exercise">
+<div class="xt">练习 2.1 · 推导</div>
+<p>若改用 <code>NOISE_AT_ZERO</code>（<code>t=0</code> 是噪声），写出 <code>x_t</code>、速度目标与欧拉更新式，并说明代码里为什么需要翻转符号。</p>
+<details><summary>参考答案</summary>
+<p><code>x_t=(1−t)ε+t a</code>，<code>v_t=a−ε</code>，积分从 <code>t=0</code> 到 <code>1</code>，<code>Δt=+1/N</code>，<code>x←x+Δt·v</code>。两种约定描述同一条几何路径，只是参数化方向相反；若把 <code>NOISE_AT_ONE</code> 训练出的速度直接喂给 <code>NOISE_AT_ZERO</code> 的积分器而不翻转符号，就会沿反方向走，等价于 <code>x←x−Δ·v</code> 的符号错误。RTC 处理器内部固定用 <code>NOISE_AT_ONE</code> 语义，所以适配层会做 <code>1−t</code> 与速度取反。</p>
+</details>
+</div>
+
+<div class="chnum" id="c3">CHAPTER 3</div>
+<h2>Transformer、RoPE 与 prefix-LM 掩码</h2>
+<p class="lead">SmolVLA 的“魔法”不在新算子，而在两路 token 共享一次注意力调用、却用一张掩码精确控制谁能看谁。把这张掩码讲清楚，架构就通了。</p>
+
+<h3>3.1 最小必要机制</h3>
+<p>多头注意力对每个 token 计算 <code>Q,K,V</code>，用 <code>softmax(QKᵀ/√d + mask)V</code> 聚合。掩码里 <code>−∞</code> 表示禁止。SmolVLM2 的文本骨干使用 <strong>RoPE</strong>（旋转位置编码）：把 Q/K 的每对维度视为二维向量旋转一个与位置成正比的角度，因此注意力只依赖相对位移 <code>i−j</code>，外推到更长序列时比绝对位置编码更稳。</p>
+<p>本项目还涉及 <strong>GQA</strong>（分组查询注意力）：Q 的头数多于 K/V 的头数，多个 Q 头共享一组 K/V，减少 KV cache 显存。动作专家沿用与 VLM 相同的 head 维度，才能把两路的 Q/K/V 在序列维拼接。</p>
+
+<h3>3.2 一张掩码，三种可见性</h3>
+<p>SmolVLA 不用标准的因果掩码，而用 openpi/big_vision 的 <strong>cumulative mask</strong>：每个 token 有一个 <code>att_mask</code>（0 或 1），先做累加，再令 token <code>i</code> 能看见 <code>j</code> 当且仅当</p>
+<math display="block">
+<msub><mi>c</mi><mi>j</mi></msub><mo>≤</mo><msub><mi>c</mi><mi>i</mi></msub><mo>,</mo><mspace width="10px"/><msub><mi>c</mi><mi>i</mi></msub><mo>=</mo><munderover><mo>∑</mo><mrow><mi>k</mi><mo>≤</mo><mi>i</mi></mrow><mi></mi></munderover><msub><mi>m</mi><mi>k</mi></msub><mo>,</mo><mspace width="10px"/><msub><mi>m</mi><mi>k</mi></msub><mo>∈</mo><mo>{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>}</mo>
+</math>
+<p>实现里同时乘上 <code>pad_j &amp; pad_i</code>，把 padding token 屏蔽。这个设计的含义是：<strong>att_mask=0 的连续片段构成一个双向可见的块；每遇到一个 1，就开启一个新的、只能看前面块和自身块内历史的片段。</strong></p>
+
+<div class="tbl"><table>
+<caption>本项目实际的 att_mask 分配（源码 <code>embed_prefix</code> / <code>embed_suffix</code>）</caption>
+<tr><th>片段</th><th>token 数（上限）</th><th>att_mask</th><th>cumsum</th><th>可见性</th></tr>
+<tr><td>两路图像</td><td>2 × 64 = 128</td><td>0</td><td>0</td><td>图像之间双向；看不到状态与动作</td></tr>
+<tr><td>语言指令</td><td>≤ 48</td><td>0</td><td>0</td><td>与图像同一块，双向</td></tr>
+<tr><td>本体状态</td><td>1</td><td>1</td><td>1</td><td>能看到全部图像/语言；图像/语言看不到它</td></tr>
+<tr><td>动作后缀</td><td>50</td><td>1</td><td>2…51</td><td>看到全部前缀 + 之前动作；动作间因果</td></tr>
+</table></div>
+<svg viewBox="0 0 740 470" width="100%" role="img" aria-label="prefix-LM 注意力掩码示意图">
+<rect x="0" y="0" width="740" height="470" fill="#ffffff"/>
+<text x="24" y="28" font-family="sans-serif" font-size="14" font-weight="700" fill="#1b1f24">谁可以看谁：8 个 token 的可见性矩阵</text>
+<text x="24" y="48" font-family="sans-serif" font-size="11.5" fill="#5c6672">行 = query，列 = key。蓝 = 可见，灰 = 被掩码。图像/语言共享一个双向块，状态开启新块，动作逐 token 因果。</text>
+<text x="215.0" y="76" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="middle">I1</text>
+<text x="253.0" y="76" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="middle">I2</text>
+<text x="291.0" y="76" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="middle">L</text>
+<text x="329.0" y="76" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="middle">S</text>
+<text x="367.0" y="76" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="middle">A1</text>
+<text x="405.0" y="76" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="middle">A2</text>
+<text x="443.0" y="76" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="middle">A3</text>
+<text x="481.0" y="76" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="middle">A4</text>
+<text x="184" y="109.0" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="end">I1</text>
+<text x="184" y="147.0" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="end">I2</text>
+<text x="184" y="185.0" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="end">L</text>
+<text x="184" y="223.0" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="end">S</text>
+<text x="184" y="261.0" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="end">A1</text>
+<text x="184" y="299.0" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="end">A2</text>
+<text x="184" y="337.0" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="end">A3</text>
+<text x="184" y="375.0" font-family="sans-serif" font-size="11" fill="#5c6672" text-anchor="end">A4</text>
+<rect x="196" y="86" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="234" y="86" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="272" y="86" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="310" y="86" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="348" y="86" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="386" y="86" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="424" y="86" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="462" y="86" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="196" y="124" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="234" y="124" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="272" y="124" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="310" y="124" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="348" y="124" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="386" y="124" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="424" y="124" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="462" y="124" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="196" y="162" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="234" y="162" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="272" y="162" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="310" y="162" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="348" y="162" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="386" y="162" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="424" y="162" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="462" y="162" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="196" y="200" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="234" y="200" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="272" y="200" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="310" y="200" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="348" y="200" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="386" y="200" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="424" y="200" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="462" y="200" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="196" y="238" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="234" y="238" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="272" y="238" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="310" y="238" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="348" y="238" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="386" y="238" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="424" y="238" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="462" y="238" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="196" y="276" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="234" y="276" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="272" y="276" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="310" y="276" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="348" y="276" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="386" y="276" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="424" y="276" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="462" y="276" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="196" y="314" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="234" y="314" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="272" y="314" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="310" y="314" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="348" y="314" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="386" y="314" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="424" y="314" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="462" y="314" width="38" height="38" fill="#f0f2f5" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="196" y="352" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="234" y="352" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="272" y="352" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="310" y="352" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="348" y="352" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="386" y="352" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="424" y="352" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="462" y="352" width="38" height="38" fill="#cfe0f7" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="192" y="82" width="122" height="122" fill="none" stroke="#1f5fbf" stroke-width="1.2" rx="3"/>
+<text x="324" y="147.0" font-family="sans-serif" font-size="11" fill="#1f5fbf">att_mask=0，双向块</text>
+<text x="362" y="223.0" font-family="sans-serif" font-size="11" fill="#1f5fbf">状态：看全部前缀</text>
+<text x="362" y="325.6" font-family="sans-serif" font-size="11" fill="#1f5fbf">动作：前缀 + 因果历史</text>
+<text x="362" y="371.2" font-family="sans-serif" font-size="11" fill="#8a5300">前缀永远看不到动作</text>
+<text x="196" y="418" font-family="sans-serif" font-size="11" fill="#5c6672">cumsum = [0,0,0,1,2,3,4,5]；判据 c_j ≤ c_i。</text>
+</svg>
+
+<div class="box">
+<div class="bt">为什么 state 的 att_mask 是 1？</div>
+<p>源码注释写得很直白：“Set attention masks so that image and language inputs do not attend to state or actions.” 把状态单独开一个块，既让状态能看到完整视觉/语言上下文，又保证图像/语言 token 的表示不被状态污染。副作用是状态也不能看动作（本来就不该看）。这个小细节是区分“读过代码”与“只看过论文图”的分水岭。</p>
+</div>
+
+<h3>3.3 两路 token 如何共享一次注意力</h3>
+<p>在自注意力层，代码把 VLM 与专家的 <code>Q/K/V</code> 沿序列维拼接，做一次 attention，再按长度切回两路。由于掩码规定前缀看不到后缀，VLM 一侧的计算与“只跑前缀”等价；专家一侧则同时获得前缀信息与动作历史。<strong>在去噪阶段，VLM 输入是 <code>None</code>，只有专家流进入计算，但它会读取预填充时缓存的前缀 K/V</strong>，所以“自注意力层”实际上也完成了一次跨模态读取。</p>
+<p>交叉注意力层则不同：专家的 Q 来自自身，K/V 从前缀缓存读取后，再用专家的 <code>k_proj/v_proj</code> 重新投影到专家空间；专家位置 id 会被减去最小值，使其从 0 开始——因为交叉注意力只关心专家内部的相对顺序。前缀预填充时，所有层都走自注意力路径以填满 KV cache；只有在去噪阶段才按 <code>layer_idx % 2</code> 交替走 SA / CA。这一点在源码里由 <code>fill_kv_cache</code> 条件控制。</p>
+
+<h3>3.4 KV cache：为什么推理能快 3–4 倍</h3>
+<p>前缀（≤177 token）在 10 次去噪中不变，可以只算一次，把每层的 K/V 存下来。之后每步只输入 50 个动作 token，注意力代价从 <code>O((L+50)²)</code> 降为 <code>O(50² + 50L)</code>。粗略估算（单层、忽略常数）：</p>
+<div class="tbl"><table>
+<tr><th>方式</th><th>每步注意力元素数</th><th>10 步合计</th><th>相对开销</th></tr>
+<tr><td>不缓存（每步重算全序列）</td><td>(177+50)² ≈ 51,529</td><td>515,290</td><td>3.56×</td></tr>
+<tr><td>缓存前缀（只算后缀）</td><td>50² + 50×177 ≈ 11,350</td><td>31,329 + 113,500 = 144,829</td><td>1.00×</td></tr>
+</table></div>
+<p>每步结束后代码调用 <code>past_key_values.crop(prefix_len)</code>，把刚追加的 50 个动作 K/V 丢掉，恢复成纯前缀，供下一步复用。这是“10 步去噪不会让 cache 越滚越大”的关键；忘了 crop 会导致显存随步数线性增长，并在第 10 步报 shape 不匹配。</p>
+<p>缓存本身也占显存：每层每路 K/V 为 <code>2 × B × H_kv × L × d_head</code>。对 16 层、5 个 KV 头、64 维、177 token、batch 10，约 <code>16×2×10×5×177×64×2 bytes ≈ 36 MB</code>（fp16），可以忽略；真正占显存的是 450M 权重与激活。面试若问“KV cache 有什么代价”，答“显存随层数、KV 头数、序列长度线性增长；对长上下文/大 batch 才显著，本项目前缀不到 200 token，不是瓶颈”。</p>
+
+<div class="exercise">
+<div class="xt">练习 3.1 · 掩码</div>
+<p>给定 <code>att_mask = [0,0,0,1,1,1]</code>，写出 6×6 可见矩阵中被允许的位置（行 query，列 key），并说明它对应哪种注意力模式。</p>
+<details><summary>参考答案</summary>
+<p>cumsum = [0,0,0,1,2,3]。行 0–2 只能看列 0–2（双向）；行 3 看列 0–3；行 4 看列 0–4；行 5 看列 0–5。即“前 3 个 token 双向 + 后 3 个 token 因果”，正是 prefix-LM。若把第 4 个 token 的 mask 改成 0，则前 4 个变成双向块，后 2 个因果。</p>
+</details>
+</div>
+
+<div class="box warn">
+<div class="bt">常见误区</div>
+<p>①把 <code>att_mask</code> 当成“是否参与注意力”的开关——不是，它控制的是<strong>块边界</strong>；真正屏蔽 padding 的是 <code>pad_mask</code>。②以为前缀能看后缀——不能，cumsum 条件保证了这一点。③以为动作之间双向——不能，后一个动作能看到前一个，反之不行，这是自回归生成的结构。④以为去噪时 VLM 又跑了一遍——没有，<code>inputs_embeds=[None, suffix]</code>，只跑专家。</p>
+</div>
+
+<div class="part-open">
+  <div class="pnum">Part II</div>
+  <h2>架构与工程：从仓库到一次 update</h2>
+  <p>这一部分回答“代码在哪、配置怎么生效、一次训练/评测到底发生了什么”。目标是让你能在白板上画出从 parquet 文件到动作执行的完整链路。</p>
+</div>
+
+<div class="chnum" id="c4">CHAPTER 4</div>
+<h2>代码地图与数据流</h2>
+<p class="lead">面对一个 20 万行的 lerobot，最有效的方法是先锁定 7 个文件。其他都是外围。本章给出“概念 → 文件 → 行号”的映射，以及一张端到端数据流图。</p>
+
+<h3>4.1 七个核心文件</h3>
+<div class="tbl"><table>
+<caption>按“面试最常被问”的顺序排列。路径均相对于 <code>lerobot/src/lerobot/</code>。</caption>
+<tr><th>概念</th><th>文件</th><th>关键位置</th></tr>
+<tr><td>策略配置（chunk、层数、冻结、优化器）</td><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/policies/smolvla/configuration_smolvla.py">configuration_smolvla.py</a></td><td>L26 类定义；L29–30 chunk/n_action；L96–98 层数与宽度</td></tr>
+<tr><td>策略封装（预处理、动作队列、loss）</td><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/policies/smolvla/modeling_smolvla.py">modeling_smolvla.py</a></td><td>L144 策略类；L197 取 chunk；L248 select_action；L281 forward；L505 VLAFlowMatching</td></tr>
+<tr><td>两流 Transformer（VLM + 专家）</td><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/policies/smolvla/smolvlm_with_expert.py">smolvlm_with_expert.py</a></td><td>L74 类；L220 SA 层；L294 CA 层；L414 主循环；L152 冻结逻辑</td></tr>
+<tr><td>流匹配工具（时间采样、欧拉积分、RTC）</td><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/policies/common/flow_matching.py">flow_matching.py</a></td><td>L49 约定；L256 euler_integrate；L340 速度封装</td></tr>
+<tr><td>图像/状态/动作预处理</td><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/policies/smolvla/processor_smolvla.py">processor_smolvla.py</a></td><td>归一化、resize、tokenizer、device 迁移</td></tr>
+<tr><td>数据切片与 episode 边界 padding</td><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/datasets/dataset_reader.py">dataset_reader.py</a></td><td>L298 <code>_get_query_indices</code>；L310 <code>delta_window</code> + <code>*_is_pad</code></td></tr>
+<tr><td>LIBERO 环境包装</td><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/envs/libero.py">libero.py</a></td><td>L107 类；L168 初始状态；L344 reset；L351 预热 10 步</td></tr>
+</table></div>
+
+<h3>4.2 端到端数据流</h3>
+<p>下图把训练与推理放在同一条时间线上。注意两个闭环：训练闭环只更新参数，推理闭环由环境驱动；它们共享同一个 <code>π</code>，但数据形状与调用频率完全不同。</p>
+
+<svg viewBox="0 0 980 300" width="100%" role="img" aria-label="SmolVLA 端到端数据流">
+  <defs>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#5c6672"/></marker>
+    <marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#1f5fbf"/></marker>
+  </defs>
+  <rect x="0" y="0" width="980" height="300" fill="#fff"/>
+  <g font-family="sans-serif" font-size="11" fill="#1b1f24" text-anchor="middle">
+    <rect x="16" y="70" width="132" height="62" rx="7" fill="#f2f6fc" stroke="#c7d9f3"/>
+    <text x="82" y="94" font-weight="700">LeRobot 数据集</text><text x="82" y="112" fill="#5c6672">1693 eps · 40 tasks</text>
+    <rect x="176" y="70" width="132" height="62" rx="7" fill="#f2f6fc" stroke="#c7d9f3"/>
+    <text x="242" y="94" font-weight="700">采样 + delta_t</text><text x="242" y="112" fill="#5c6672">50 步动作窗口</text>
+    <rect x="336" y="70" width="132" height="62" rx="7" fill="#f2f6fc" stroke="#c7d9f3"/>
+    <text x="402" y="94" font-weight="700">预处理 / 归一化</text><text x="402" y="112" fill="#5c6672">512×512 · MEAN_STD</text>
+    <rect x="496" y="46" width="184" height="110" rx="8" fill="#eaf1fb" stroke="#1f5fbf" stroke-width="1.4"/>
+    <text x="588" y="70" font-weight="700" fill="#1f5fbf">SmolVLA（450M）</text>
+    <text x="588" y="90" fill="#3d4854">前缀 ≤177 token</text>
+    <text x="588" y="108" fill="#3d4854">后缀 50 动作 token</text>
+    <text x="588" y="126" fill="#3d4854">10 步 Euler 去噪</text>
+    <text x="588" y="144" fill="#5c6672">冻结 VLM + 训练专家</text>
+    <rect x="710" y="70" width="120" height="62" rx="7" fill="#f2f6fc" stroke="#c7d9f3"/>
+    <text x="770" y="94" font-weight="700">动作 chunk</text><text x="770" y="112" fill="#5c6672">50 × 7（pad 32）</text>
+    <rect x="858" y="70" width="106" height="62" rx="7" fill="#eef8f2" stroke="#2f8a5f"/>
+    <text x="911" y="94" font-weight="700">LIBERO</text><text x="911" y="112" fill="#3d6f55">20 Hz · 闭环</text>
+  </g>
+  <g stroke="#5c6672" stroke-width="1.3" marker-end="url(#ar)">
+    <line x1="148" y1="101" x2="170" y2="101"/><line x1="308" y1="101" x2="330" y2="101"/>
+    <line x1="468" y1="101" x2="490" y2="101"/><line x1="680" y1="101" x2="704" y2="101"/>
+    <line x1="830" y1="101" x2="852" y2="101"/>
+  </g>
+  <path d="M911,138 C911,206 820,214 770,214 C560,214 470,196 470,138" fill="none" stroke="#1f5fbf" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ar2)"/>
+  <text x="690" y="238" font-family="sans-serif" font-size="11" fill="#1f5fbf" text-anchor="middle">执行 n_action_steps 后重新观测（评测 n=1，每步重规划）</text>
+  <g font-family="sans-serif" font-size="11" fill="#5c6672">
+    <text x="16" y="40" font-weight="700" fill="#1f6f4a">训练时</text>
+    <text x="496" y="26" font-weight="700" fill="#1f5fbf">一次前向 = 一次速度预测；loss 只在动作 token 上计算</text>
+    <text x="16" y="278">输入还有本体状态（8 维 → pad 32）与语言 token（≤48）：状态作为独立 token 插在语言之后，att_mask=1。</text>
+  </g>
+</svg>
+
+<h3>4.3 推理路径的三个入口</h3>
+<div class="tbl"><table>
+<tr><th>入口</th><th>调用</th><th>用途</th><th>注意</th></tr>
+<tr><td>单步选择</td><td><code>policy.select_action(batch)</code></td><td>真机/仿真逐步控制</td><td>内部维护动作队列；队列空才预测整块</td></tr>
+<tr><td>整块预测</td><td><code>policy.predict_action_chunk(batch)</code></td><td>离线分析、RTC</td><td>返回 <code>[B, n_action_steps, action_dim]</code></td></tr>
+<tr><td>评测脚本</td><td><code>lerobot-eval</code></td><td>LIBERO 成功率</td><td>负责 reset、batch 环境、汇总 success</td></tr>
+</table></div>
+<p>读源码时先看 <code>select_action</code>：它把 <code>predict_action_chunk</code> 的结果转置后塞进 <code>deque(maxlen=n_action_steps)</code>，每次弹一个。评测把 <code>n_action_steps</code> 覆盖成 1，所以每步都会重新预测；如果忘了这一点，会误以为“模型每 50 步才看一次图像”。</p>
+
+<div class="chnum" id="c5">CHAPTER 5</div>
+<h2>配置系统与一次 update 的全过程</h2>
+<p class="lead">lerobot 用 dataclass + draccus 把 YAML/CLI 映射成强类型配置。理解“配置从哪来、覆盖到哪、何时校验”，你才能解释为什么同一份代码能跑 LIBERO、Aloha 和真机。</p>
+
+<h3>5.1 配置的三层来源</h3>
+<ol>
+<li><strong>默认值</strong>：<code>SmolVLAConfig</code> 的字段（<code>chunk_size=50</code>、<code>num_vlm_layers=16</code>、<code>expert_width_multiplier=0.75</code>…）。</li>
+<li><strong>预训练配置</strong>：<code>--policy.path=smolvla_base_fp32</code> 会让框架读取该目录的 <code>config.json</code>，恢复骨干名称、层数、归一化方式等；这也是“从 Hub 权重起步”的入口。</li>
+<li><strong>命令行覆盖</strong>：<code>--policy.n_action_steps=1</code>、<code>--batch_size=32</code>、<code>--steps=8000</code>。draccus 按点路径递归覆盖，类型错误会在启动时暴露。</li>
+</ol>
+<p>本项目显式传了 <code>--policy.input_features=null --policy.output_features=null</code>，意思是“不要用配置文件里的旧特征，按当前数据集重新推断”。如果不置空，加载 LIBERO 数据时可能沿用 base 模型的特征名（如 Aloha 的关节名），导致维度或键名不匹配。</p>
+
+<div class="box warn">
+<div class="bt">一个真实的坑：覆盖不存在的键不会报错</div>
+<p>项目在数据增强实验里想改 <code>policy.image_transforms.tfs</code>，但该键在配置里是一个整体 JSON 对象。用点路径只覆盖子字段时，draccus 可能静默保留默认值，最终得到一个“恒等变换”——你以为开了增强，实际没有。正确做法是<strong>整体替换 <code>tfs</code> 字典</strong>，并在启动时打印生效的变换列表做自检。这个教训在面试里很值钱：它说明你验过“配置真的生效”，而不是只看 loss 动了。</p>
+</div>
+
+<h3>5.2 一次 update 的步骤</h3>
+<pre><code>batch = next(loader)                  # 图像 [B,2,3,512,512], state [B,32], action [B,50,32]
+batch = preprocessor(batch)           # resize/pad、tokenize、归一化、device
+loss, log = policy.forward(batch)     # 采样 t/eps → 前向 → masked MSE
+accelerator.backward(loss)            # fp16: GradScaler 先 scale loss
+clip_grad_norm_(params, 10.0)
+optimizer.step(); scheduler.step(); optimizer.zero_grad()
+if step % save_freq == 0: save_checkpoint(...)</code></pre>
+<p>冻结策略下，优化器只包含动作专家与 <code>state_proj</code> 的参数（约 100M），VLM 的 350M 只做前向。注意 VLM 仍在 <code>eval()</code> 模式（dropout 关闭），但梯度图不建立，显存主要花在激活上。</p>
+
+<h3>5.3 关键超参：默认 vs 本项目</h3>
+<div class="tbl"><table>
+<caption>源码默认值来自 <code>configuration_smolvla.py</code>；本项目值来自训练命令与 README。</caption>
+<tr><th>超参</th><th>默认</th><th>本项目</th><th>为什么改 / 影响</th></tr>
+<tr><td><code>chunk_size</code></td><td>50</td><td>50</td><td>约 2.5 s 动作；与 LIBERO 示范长度匹配</td></tr>
+<tr><td><code>n_action_steps</code></td><td>50</td><td>评测 1</td><td>逐步重规划，对齐论文仿真协议</td></tr>
+<tr><td><code>num_steps</code>（去噪）</td><td>10</td><td>10</td><td>精度/延迟折中；论文固定 10</td></tr>
+<tr><td><code>batch_size</code></td><td>—</td><td>32/卡 × 2</td><td>有效 64；T4 15GB 可容纳</td></tr>
+<tr><td><code>optimizer_lr</code></td><td>1e-4</td><td>1e-4</td><td>官方 preset</td></tr>
+<tr><td><code>scheduler_warmup_steps</code></td><td>1000</td><td>2000</td><td>8k 总步数下让前期更稳</td></tr>
+<tr><td><code>scheduler_decay_steps</code></td><td>30000</td><td>32000</td><td>避免 8k 内余弦触底；见 5.4</td></tr>
+<tr><td><code>save_freq</code></td><td>—</td><td>2000（M1）</td><td>崩溃最多损失约 1 小时；续训版改 1000</td></tr>
+<tr><td>精度</td><td>bf16</td><td>fp16 + GradScaler</td><td>T4（SM75）不支持 bf16</td></tr>
+</table></div>
+
+<h3>5.4 学习率调度：为什么“对齐步数”是硬约束</h3>
+<p>余弦带 warmup 的形式是</p>
+<math display="block">
+<mi>η</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>=</mo><msub><mi>η</mi><mi>min</mi></msub><mo>+</mo><mfrac><mrow><mn>1</mn><mo>+</mo><mi>cos</mi><mo>(</mo><mi>π</mi><mo>⋅</mo><mfrac><mrow><mi>s</mi><mo>−</mo><msub><mi>s</mi><mi>w</mi></msub></mrow><mrow><msub><mi>s</mi><mi>d</mi></msub><mo>−</mo><msub><mi>s</mi><mi>w</mi></msub></mrow></mfrac><mo>)</mo></mrow><mn>2</mn></mfrac><mo>(</mo><msub><mi>η</mi><mi>max</mi></msub><mo>−</mo><msub><mi>η</mi><mi>min</mi></msub><mo>)</mo>
+</math>
+<p>本项目 <code>warmup=2000</code>、<code>decay=32000</code>、<code>peak=1e-4</code>、<code>min=2.5e-6</code>。在第 8000 步，进度 <code>(8000−2000)/(32000−2000)=0.2</code>，余弦因子 <code>(1+cos(0.2π))/2≈0.905</code>，学习率约 <code>9.1e-5</code>，仍接近峰值。若把 <code>decay_steps</code> 设成 8000，则最后几十步学习率会掉到 <code>2.5e-6</code>，模型几乎停止更新；这不是“训练完了”，而是“调度器提前收尾”。项目把“scheduler 步数与 <code>--steps</code> 显式对齐”写进纪律，就是为了避免这种静默空转。</p>
+
+<h3>5.5 checkpoint 与断点续训</h3>
+<p>一个完整 checkpoint 目录包含 <code>pretrained_model/</code>（权重 + <code>config.json</code> + processor 四个文件）与 <code>training_state/</code>（优化器、调度器、GradScaler、RNG、采样器偏移）。只恢复权重而不恢复优化器，会让 Adam 动量清零、学习率从头开始，表现为 loss 突然跳变。项目的续训命令同时传 <code>--resume=true</code> 与 <code>--config_path=.../checkpoints/000008000/pretrained_model</code>，前者恢复训练状态，后者指定策略配置与权重。</p>
+<p>在 Kaggle 上，checkpoint 还要对抗“会话被回收”：每 1000–2000 步保存，并把 <code>pretrained_model</code> 与 <code>training_state</code> 全量上传到私有 HF 仓库的 <code>checkpoints-backup/</code>。下次启动扫描 Hub 上最大累计步数，自动计算剩余步数。这里最容易犯的错是只上传顶层文件、漏掉子目录，导致加载时报 “Missing processor artifact 'tokenizer'”。</p>
+
+<div class="chnum" id="c6">CHAPTER 6</div>
+<h2>评测入口：协议、批处理与统计</h2>
+<p class="lead">训练决定上限，评测决定你能否把上限讲清楚。本章跟踪 <code>lerobot-eval</code> 的一次完整调用，并给出置信区间的正确算法。</p>
+
+<h3>6.1 评测命令与参数语义</h3>
+<pre><code>lerobot-eval \
+  --policy.path=outputs/m1_base_libero/checkpoints/008000/pretrained_model \
+  --env.type=libero --env.task=libero_spatial \
+  --eval.batch_size=10 --eval.n_episodes=10 \
+  --policy.n_action_steps=1 --policy.num_steps=10 \
+  --output_dir=outputs/eval_m2</code></pre>
+<p>关键语义：<code>batch_size=10</code> 表示同时开 10 个并行环境（不是 10 个任务）；<code>n_episodes=10</code> 表示每个任务跑 10 个 episode。LIBERO 有 10 个任务，所以总共 100 次 rollout。<code>n_action_steps=1</code> 覆盖策略默认的 50，保证“每执行一步就重规划”。</p>
+
+<h3>6.2 并行环境如何绑定初始状态</h3>
+<p>每个子环境在构造时拿到 <code>episode_index</code>，并令 <code>init_state_id = episode_index</code>；reset 时从该任务的初始状态文件里取第 <code>init_state_id % len(states)</code> 个状态，然后 <code>init_state_id += n_envs</code>。这样 10 个并行环境在第一轮分别用 0–9 号初始状态，第二轮用 10–19 号，既避免重复，又保证同一任务的所有 episode 覆盖不同初始布局。若 <code>n_envs</code> 与任务数不整除，最后一个 batch 会少跑几个 episode，脚本按 <code>n_episodes</code> 截断。</p>
+<p>reset 之后还有 <code>num_steps_wait=10</code> 步的零动作预热。原因是仿真重置后物体可能轻微悬空或相交，直接执行策略动作会得到非物理的初始观测；空转 10 帧让物体落稳。这个细节会显著影响可复现性，面试若问“为什么你的评测和别人的差几个点”，先查预热步数与初始状态。</p>
+
+<h3>6.3 成功判定与聚合</h3>
+<p>每个控制步调用 <code>env.check_success()</code>，一旦成功就 <code>terminated=True</code>；达到套件最大步数（spatial 280、goal 300、libero_10 520）则截断。评测脚本记录每个 episode 的 success、seed、task，最后写 <code>eval_info.json</code>，包含 <code>aggregated.pc_success</code>、<code>per_task</code> 与逐 episode 明细。项目把 100 个 rollout 视频也一并归档，便于失败模式分析。</p>
+
+<h3>6.4 Wilson 区间：公式、复算与修正</h3>
+<p>二项比例的 95% Wilson 区间为</p>
+<math display="block">
+<mfrac><mrow><mover><mi>p</mi><mo>^</mo></mover><mo>+</mo><mfrac><msup><mi>z</mi><mn>2</mn></msup><mrow><mn>2</mn><mi>n</mi></mrow></mfrac><mo>±</mo><mi>z</mi><msqrt><mfrac><mrow><mover><mi>p</mi><mo>^</mo></mover><mo>(</mo><mn>1</mn><mo>−</mo><mover><mi>p</mi><mo>^</mo></mover><mo>)</mo></mrow><mi>n</mi></mfrac><mo>+</mo><mfrac><msup><mi>z</mi><mn>2</mn></msup><mrow><mn>4</mn><msup><mi>n</mi><mn>2</mn></msup></mrow></mfrac></msqrt></mrow><mrow><mn>1</mn><mo>+</mo><mfrac><msup><mi>z</mi><mn>2</mn></msup><mi>n</mi></mfrac></mrow></mfrac>
+</math>
+<p>代入 <code>p̂=0.74, n=100, z=1.96</code>：中心 <code>0.7311</code>，半宽 <code>0.0848</code>，得到 <strong>[64.6%, 81.6%]</strong>。归档报告写的 [63.0%, 83.2%] 比标准 Wilson 更宽，可能是用了带连续性修正或另一种近似；无论原因，面试应报可复算的值，并说明方法。若被问“为什么不用正态近似”，答“n=100、p 不接近 0/1 时两者接近，但 Wilson 在极端比例（如 3/10）更稳，且不会越界”。</p>
+
+<div class="example">
+<div class="et">单任务 3/10 的区间有多宽</div>
+<p><code>p̂=0.3, n=10</code> 的 Wilson 区间约 <strong>[10.8%, 60.3%]</strong>。也就是说 spatial_5 的 30% 与 spatial_1 的 100% 之间的差距，在 10 个样本下依然可能是噪声。不要用单任务排名做“模型能力”结论；要做改进实验，至少把该任务加到 30–50 个 episode，或跨 seed 汇总。</p>
+</div>
+
+<h3>6.5 结果文件的结构</h3>
+<div class="kv">
+<div>aggregated</div><div><code>pc_success</code>、<code>n_episodes</code>、<code>avg_sum_reward</code>、<code>eval_ep_s</code>（每 episode 秒数）</div>
+<div>per_task</div><div>每个任务的 success 计数、区间、episode 列表；用于定位短板</div>
+<div>per_group</div><div>按套件/难度分组的聚合，便于跨套件比较</div>
+<div>videos</div><div>逐 episode 的 mp4；文件名含任务与序号，便于人工复核失败</div>
+</div>
+
+<div class="chnum" id="c7">CHAPTER 7</div>
+<h2>零成本训练基础设施：把“能跑”变成“可恢复”</h2>
+<p class="lead">这一段经历在面试里常被低估。它证明你能在真实约束（12 小时会话、20GB 磁盘、无 bf16、无交互 shell）下交付，而不是只在理想集群上跑通 demo。</p>
+
+<h3>7.1 约束清单</h3>
+<div class="tbl"><table>
+<tr><th>约束</th><th>后果</th><th>应对</th></tr>
+<tr><td>2×T4，SM75，无 bf16</td><td>官方代码默认 <code>torch_dtype=bfloat16</code> 直接报错或产生 NaN</td><td>把 VLM 权重 cast 到 fp32，训练用 fp16 autocast + GradScaler</td></tr>
+<tr><td>15GB/卡</td><td>450M 权重 + 激活 + 优化器状态</td><td>冻结 VLM，只训练 100M；bs32/卡，无梯度累积</td></tr>
+<tr><td>Kaggle 会话上限 12h / 空闲回收</td><td>训练可能被硬切</td><td>Save &amp; Run All 批处理；save_freq=1000–2000；每 checkpoint 推 Hub</td></tr>
+<tr><td>20GB 工作盘</td><td>多个 10.4GB checkpoint 会撑爆</td><td>只保留最近 2 个；按峰值规划空间</td></tr>
+<tr><td>无交互 shell（批处理）</td><td>无法在训练后手动清理</td><td>训练脚本内置清理与上传；失败标记写入磁盘</td></tr>
+<tr><td>网络不稳</td><td>Hub 上传中断、隧道断</td><td>重试上限 2 次；用 ntfy 信标而非 SSH 隧道做监控</td></tr>
+</table></div>
+
+<h3>7.2 fp16 迁移为什么不是一行开关</h3>
+<p>T4 的 Tensor Core 支持 fp16，但不支持 bf16。直接把 <code>torch_dtype="bfloat16"</code> 改成 <code>"float16"</code> 并不够：SmolVLM2 的权重在加载时若以 bf16 存储，转 fp16 可能溢出；更稳的做法是先把权重 cast 成 fp32 保存，训练时用 <code>accelerator.mixed_precision=fp16</code>，让前向/反向的矩阵乘走 fp16、参数更新保留 fp32 master weights，并由 GradScaler 动态放大损失防止下溢。</p>
+<p>代价是显存比 bf16 略高、数值范围更窄，长训练可能出现 loss spike。项目里观察到 loss 从 1.14 平滑降到约 0.5，没有出现需要回滚的尖峰；但这不意味着 fp16 永远安全，面试应补一句“若出现 NaN，先查 GradScaler 的 scale 是否持续下降，再查 attention softmax 是否有全 -inf 行”。</p>
+
+<h3>7.3 断点续训的状态机</h3>
+<pre><code>scan HF checkpoints-backup/ → 找最大累计步数 N
+if N >= target: 结束
+剩余 = target − N
+启动训练：--resume=true --config_path=.../ckpt-N/pretrained_model
+每 1000 步：save → upload_folder（含 training_state 子目录）
+会话死亡：下次从 Hub 重新扫描，重复上述流程</code></pre>
+<p>三个易错点：①只按文件名排序会漏掉子目录，必须递归扫描；②只上传 <code>model.safetensors</code> 会缺 tokenizer/normalizer，加载时报 “Missing processor artifact”；③续训时如果不恢复 <code>training_state</code>，优化器动量与调度器步数会重置，等效于换了一个训练过程。项目的 v13–v19 迭代基本都在修这三件事。</p>
+
+<div class="box ok">
+<div class="bt">面试叙事模板</div>
+<p>“训练不是一次前向，而是一个分布式状态机。我把它拆成三件事：可观测（每 10 分钟信标）、可恢复（全状态 checkpoint + Hub 备份）、可验证（启动时打印恢复步数与学习率）。这样任何一次会话被回收，我最多损失 35 分钟，而不是整轮实验。”——这比“我跑了 8000 步”有力得多。</p>
+</div>
+
+<div class="part-open">
+  <div class="pnum">Part III</div>
+  <h2>模型逐层：450M 里到底有什么</h2>
+  <p>这一部分把模型拆成“看得见的部分”（VLM 前缀）与“动起来的部分”（动作专家后缀），并给出每个张量的形状、每个 mask 的来历、每个 loss 项的分母。</p>
+</div>
+
+<div class="chnum" id="c8">CHAPTER 8</div>
+<h2>VLM 骨干与 token 预算</h2>
+<p class="lead">SmolVLA 的第一个关键决策是“把视觉 token 压到 64/帧”。这不是工程小技巧，而是让 450M 模型能在消费级 GPU 上训练/推理的前提。</p>
+
+<h3>8.1 从像素到 token</h3>
+<p>输入图像先 resize 到 <code>512×512</code>（评测时环境给 256×256，再放大），SigLIP 以 patch 16 切成 <code>32×32=1024</code> 个 patch。若直接送进 LLM，每帧 1024 个 token，两路相机就是 2048，加上语言与 50 个动作 token，序列长度超过 2100，注意力成本与 KV cache 都会爆炸。SmolVLA 用 <strong>pixel shuffle</strong> 把相邻 <code>4×4</code> 个 patch 的通道重排成一个 token，得到 <code>1024/16=64</code> 个视觉 token/帧。论文的说法是“从约 1000 降到 64”。</p>
+
+<svg viewBox="0 0 900 150" width="100%" role="img" aria-label="token 预算">
+  <rect x="0" y="0" width="900" height="150" fill="#fff"/>
+  <text x="20" y="24" font-family="sans-serif" font-size="13" font-weight="700" fill="#1b1f24">前缀 + 后缀的 token 预算（上限）</text>
+  <g font-family="sans-serif" font-size="11">
+    <rect x="20" y="48" width="380" height="34" fill="#5d93dd"/><text x="210" y="70" fill="#fff" text-anchor="middle">图像 2×64 = 128</text>
+    <rect x="400" y="48" width="142" height="34" fill="#7fb0e8"/><text x="471" y="70" fill="#123" text-anchor="middle">语言 ≤48</text>
+    <rect x="542" y="48" width="18" height="34" fill="#c07716"/><text x="551" y="70" fill="#fff" text-anchor="middle">S</text>
+    <rect x="560" y="48" width="150" height="34" fill="#2f8a5f"/><text x="635" y="70" fill="#fff" text-anchor="middle">动作 50</text>
+    <text x="720" y="70" fill="#5c6672">总长 ≤ 227</text>
+    <text x="20" y="108" fill="#5c6672">注意力成本按前缀 177² + 后缀 50² + 跨模态 50×177 估算；若不压缩视觉，前缀会变成 ~2100，成本约 140×。</text>
+    <text x="20" y="128" fill="#8a5300">注意：语言 48 是上限，实际按 batch 内最长序列 pad；状态只有 1 个 token。</text>
+  </g>
+</svg>
+
+<h3>8.2 为什么只取前 16 层</h3>
+<p>SmolVLM2-500M 的文本骨干有 32 层（SmolLM2-360M 量级），SmolVLA 只保留前 16 层，并在其上接同样 16 层的动作专家。理由有三：①动作预测不需要完整的语言推理深度，浅层已包含足够的视觉-语义对齐；②层数直接决定训练/推理成本，16 层让 10 步去噪可控；③与专家层数一一对应，便于“同层 SA/CA”交错。这个选择是论文的实现细节，不是架构公理；面试若问“为什么不是 32 层”，答“消融上没有证据表明越多越好，16 层是精度/延迟的折中，且与专家层对齐”。</p>
+
+<h3>8.3 冻结策略与可训练参数</h3>
+<div class="tbl"><table>
+<tr><th>部分</th><th>参数量（约）</th><th>是否训练</th><th>作用</th></tr>
+<tr><td>SigLIP 视觉编码器</td><td>~90M</td><td>否</td><td>通用视觉特征；小数据微调易过拟合</td></tr>
+<tr><td>SmolLM2 文本骨干（16 层）</td><td>~260M</td><td>否</td><td>语言/视觉语义融合</td></tr>
+<tr><td>动作专家（16 层，720 宽）</td><td>~100M</td><td>是</td><td>把前缀条件转成动作速度场</td></tr>
+<tr><td>state_proj / action_in_proj / action_out_proj</td><td>~1M</td><td>是</td><td>状态与动作的模态对齐</td></tr>
+</table></div>
+<p>总计约 450M，可训练约 100M。冻结的工程收益：优化器状态从 <code>450M×12B≈5.4GB</code> 降到 <code>100M×12B≈1.2GB</code>，激活也只需为专家保留梯度；算法收益：在 1693 条示范上，全量微调 450M 极易破坏 VLM 的语义先验，冻结相当于强正则。</p>
+
+<div class="box">
+<div class="bt">如果面试官问“为什么不 LoRA”</div>
+<p>LoRA 冻结原权重、只学低秩增量，显存更省、可多任务切换；但 SmolVLA 的官方 preset 是“冻结骨干 + 全量训练专家”，本项目优先复现官方配方，没有引入 PEFT 变量。若要做 LoRA 对照，应保持数据、步数、评测协议一致，并注意 LoRA 的 rank/alpha 会改变有效学习率；这不是“更先进”，而是另一个权衡。项目把 LoRA 列为 M3 候选，而不是已完成的结论。</p>
+</div>
+
+<h3>8.4 前缀的组装顺序</h3>
+<p>源码的顺序是：<strong>两路图像 → 语言 token → 状态 token</strong>。图像与语言共享 <code>att_mask=0</code> 的双向块；状态以 <code>att_mask=1</code> 插在最后。所有 embedding 在进入 Transformer 前乘以 <code>√d</code>（图像与语言都做了），这是 openpi 的惯例，用来平衡 embedding 与位置/模态的尺度。若漏掉这一步，视觉 token 的范数远小于语言 token，注意力会被语言主导——是一个不易察觉但会影响收敛的实现细节。</p>
+
+<div class="chnum" id="c9">CHAPTER 9</div>
+<h2>动作专家：一个更窄的 Transformer</h2>
+<p class="lead">动作专家不是“另一个 VLM”，而是与 VLM 同层数、同 head 布局、但 residual 宽度只有 0.75 的并行流。它没有词表、没有图像输入，只吃“噪声动作 + 时间步”。</p>
+
+<h3>9.1 结构参数</h3>
+<div class="kv">
+<div>宽度</div><div>VLM hidden 960 → 专家 <code>0.75×960=720</code>；中间层 MLP 也按 0.75 缩放</div>
+<div>层数</div><div>与 VLM 相同（16 层）；可用 <code>num_expert_layers</code> 减少，但必须整除</div>
+<div>注意力</div><div><code>layer_idx % 2 == 0</code> 走自注意力，否则走交叉注意力；即 8 层 SA + 8 层 CA</div>
+<div>词表</div><div>无 <code>embed_tokens</code>（源码显式置 None）；输入由 <code>action_in_proj</code> 产生</div>
+<div>位置</div><div>与 VLM 共用 RoPE；后缀位置 id 接在前缀之后</div>
+<div>输出</div><div><code>action_out_proj</code> 把 720 维映射回 32 维动作</div>
+</div>
+
+<h3>9.2 为什么要“交错”而不是每层都做两种注意力</h3>
+<p>动作 token 需要两类信息：①动作之间的时序一致性（自注意力）；②与图像/语言/状态的 grounding（交叉注意力）。若每层都做 SA+CA，参数与延迟翻倍；若只做 CA，动作之间无法协调，chunk 会抖动。隔层交错是一个性价比很高的归纳偏置：偶数层先在本流内整合，奇数层再去读前缀，下一层再整合。源码里 <code>self_attn_every_n_layers=2</code> 就是这个意思。</p>
+
+<div class="box warn">
+<div class="bt">一个容易被追问的实现细节</div>
+<p>“0.75 倍”主要缩放 <strong>residual/MLP 宽度</strong>（<code>hidden_size=720</code>），但注意力头的 <code>head_dim</code> 必须与 VLM 保持一致，否则两路 Q/K/V 无法在序列维拼接。源码在构造专家时复制了 VLM 的 text config，只改 <code>hidden_size</code> 与 <code>intermediate_size</code>，保留 head 布局；交叉注意力层还把 <code>k_proj/v_proj</code> 的输入维改成 VLM 的 KV 维，输出维改成专家的 KV 维。面试若问“专家宽度不同怎么做 cross-attn”，答“Q 从专家来，K/V 从前缀缓存来，经专家自己的 k/v 投影对齐到专家的 head_dim；不是直接拿 VLM 的 K/V 做点积”。</p>
+</div>
+
+<h3>9.3 预填充与去噪的两种模式</h3>
+<p><strong>预填充</strong>：输入是完整前缀，所有 16 层都走自注意力路径（<code>fill_kv_cache=True</code>），把每层的 K/V 写入 cache。注意：即使某层在去噪时是 CA 层，预填充也必须用 SA 路径算出它的 K/V，否则 CA 层没有可读的缓存。</p>
+<p><strong>去噪</strong>：输入只有 50 个动作 token。偶数层走 SA，读取 cache 中的前缀 K/V 并追加当前动作 K/V；奇数层走 CA，读取 cache、经专家 k/v 投影后做注意力。每步结束 <code>crop(prefix_len)</code>，丢弃本步追加的动作 K/V，保证下一步从干净前缀开始。</p>
+
+<h3>9.4 参数量与计算量</h3>
+<p>专家的参数主要来自每层的 Q/K/V/O 与 MLP。粗略地，宽度 720、16 层，参数量在 100M 量级，与论文口径一致。计算量上，预填充是一次性的（16 层 × 177 token），去噪是 10 次 ×（8 层 SA + 8 层 CA）× 50 token。与“每步重算 227 token”相比，缓存把前缀的二次项摊销掉，这是 10 步去噪可行的关键。</p>
+
+<div class="chnum" id="c10">CHAPTER 10</div>
+<h2>前向、损失与形状：把一次训练算清楚</h2>
+<p class="lead">面试里最容易被追穿的是形状与分母。本章以 B=32、两路相机、语言 48、动作 50×7 为例，逐张量走一遍，并解释为什么 loss 的分母不是 50×32。</p>
+
+<h3>10.1 输入张量</h3>
+<div class="tbl"><table>
+<tr><th>字段</th><th>形状</th><th>说明</th></tr>
+<tr><td><code>images</code></td><td><code>[32, 2, 3, 512, 512]</code></td><td>两路相机，已 resize + pad；值域归一化到模型期望</td></tr>
+<tr><td><code>img_masks</code></td><td><code>[32, 2]</code></td><td>哪路相机有效；本项目两路都有效</td></tr>
+<tr><td><code>lang_tokens</code></td><td><code>[32, 48]</code></td><td>tokenizer 上限 48，短句 pad</td></tr>
+<tr><td><code>lang_masks</code></td><td><code>[32, 48]</code></td><td>padding 位置为 0</td></tr>
+<tr><td><code>state</code></td><td><code>[32, 32]</code></td><td>LIBERO 8 维 → pad 到 32</td></tr>
+<tr><td><code>actions</code></td><td><code>[32, 50, 32]</code></td><td>7 维 → pad 到 32；后 25 维恒 0</td></tr>
+<tr><td><code>action_is_pad</code></td><td><code>[32, 50]</code></td><td>episode 末尾不足 50 步的位置为 True</td></tr>
+</table></div>
+
+<h3>10.2 前缀与后缀</h3>
+<p>前缀：每路图像经 SigLIP + pixel shuffle 得到 64 个 token，投影到 960 维；语言 embedding 也是 960 维；状态经 <code>state_proj</code> 投到 960 维，作为 1 个 token。三者拼接后形状 <code>[32, 177, 960]</code>（图像 128 + 语言 48 + 状态 1）。不足 177 时在尾部 pad 0，<code>pad_mask=0</code>。</p>
+<p>后缀：噪声动作 <code>[32,50,32]</code> 先经 <code>action_in_proj</code> 投到 720 维；时间 <code>t</code> 用正弦位置编码扩展到 720 维，与动作 embedding 拼接成 1440 维，再经两层 MLP（中间 SiLU）压回 720 维。结果形状 <code>[32,50,720]</code>。时间信息不是加到每个 token 的标量，而是通过 MLP 融合，这一点与 DiT 的 AdaLN 不同。</p>
+
+<h3>10.3 掩码、位置与输出</h3>
+<p>把前缀与后缀拼成总序列（≤227），<code>att_mask</code> 为“128 个 0 + 48 个 0 + 1 个 1 + 50 个 1”，<code>pad_mask</code> 为真实 token 的掩码。位置 id 用 <code>cumsum(pad_mask)-1</code>，保证 padding 不占位置；后缀位置从前缀有效长度之后继续。输出取最后 50 个位置（<code>suffix_out[:, -50:]</code>），先 upcast 到 fp32，再经 <code>action_out_proj</code> 得到 <code>[32,50,32]</code>，最后切前 7 维。</p>
+<div class="box">
+<div class="bt">为什么输出要 upcast 到 fp32？</div>
+<p>源码注释写的是 “Original openpi code, upcast attention output”。fp16 下动作回归的最后一层对数值很敏感，upcast 后再做线性投影与 MSE，可以减少小数值下溢与梯度噪声。这是一个几乎不增加成本的稳定化技巧；面试若问“fp16 训练怎么稳”，这是可以具体说的一条。</p>
+</div>
+
+<h3>10.4 loss 的掩码与分母</h3>
+<p>源码的顺序是：先算逐元素 MSE <code>[B,50,32]</code>，<strong>按真实动作维度切片</strong> <code>[B,50,7]</code>，再乘 <code>~action_is_pad</code>，最后除以“有效步数 × 7”。注意切片长度不是硬编码的 7，而是从输出特征里取 <code>action_feature.shape[0]</code>（LIBERO 为 7，Aloha 为 14，因此同一份代码能适配不同机器人）：</p>
+<pre><code>losses = losses[:, :, : action_feature.shape[0]]   # 去掉 pad 的 25 维（LIBERO: 7）
+losses = losses * (~actions_is_pad)[..., None]     # 去掉 episode 末尾
+losses = losses[:, :, : self.config.max_action_dim]  # 32 维上界，此处为 no-op
+num_valid = ((~actions_is_pad).sum() * losses.shape[-1]).clamp_min(1)
+loss = losses.sum() / num_valid</code></pre>
+<div class="example">
+<div class="et">分母手算</div>
+<p>B=32，每条样本 50 步，其中 3 条样本各有 47 步是 padding，其余 29 条全有效。有效步数 <code>= 32×50 − 3×47 = 1600 − 141 = 1459</code>，分母 <code>= 1459×7 = 10213</code>。若错误地用 <code>losses.mean()</code>（分母 32×50×7=11200），有效动作会被稀释约 9%；若连 32 维一起平均（分母 32×50×32=51200），有效维度会被稀释到 1/4.57，相当于把学习率降到 22%。</p>
+</div>
+<p>为什么 padding 只发生在 episode 末尾？因为第 <code>t</code> 帧的 50 步窗口可能越过 episode 终点，数据集读取器用 <code>delta_window</code> 把越界索引钳到边界，并标记 <code>action_is_pad=True</code>。若不 mask，模型会在“示范结束后的重复帧”上学习静止动作，污染终止行为。</p>
+
+<div class="box warn">
+<div class="bt">日志里的 loss 可能不是你以为的 loss</div>
+<p><code>loss_dict["losses_after_forward"]</code> 是在“切维度、mask”之前算的均值，只用于观察趋势；真正反传的是 <code>loss_dict["loss"]</code>。如果面试官问“你的 loss 曲线为什么和论文不可比”，先确认口径：是否含 padding、是否含 32 维、是否 fp32。项目报告的 1.14→0.5 是训练日志口径，不应与论文的另一口径直接相减。</p>
+</div>
+
+<div class="exercise">
+<div class="xt">练习 10.1 · 形状</div>
+<p>若把 <code>chunk_size</code> 改成 30、语言上限改成 32、只用一个相机，前缀/后缀长度与总序列各是多少？loss 的分母（单样本、全有效）是多少？</p>
+<details><summary>参考答案</summary>
+<p>前缀 = 64（1 相机）+ 32（语言）+ 1（状态）= 97；后缀 = 30；总长 127。单样本全有效的分母 = 30×7 = 210。若保留两相机，前缀 = 161，总长 191。注意 <code>n_action_steps ≤ chunk_size</code>，改成 30 后评测若仍写 50 会直接报错。</p>
+</details>
+</div>
+
+<div class="chnum" id="c11">CHAPTER 11</div>
+<h2>推理：预填充、10 步去噪与动作队列</h2>
+<p class="lead">训练是一次前向，推理是“1 次预填充 + 10 次后缀前向”。把这条链路讲清楚，你就能回答延迟、缓存、RTC 与部署的所有追问。</p>
+
+<h3>11.1 调用链</h3>
+<pre><code>select_action(batch)
+  └─ if queue empty:
+       predict_action_chunk(batch)
+         ├─ embed_prefix(images, lang, state)          # [B,177,960]
+         ├─ vlm_with_expert.forward(prefix, None)      # 填 KV cache
+         ├─ euler_integrate(denoise_step, noise, 10)
+         │    └─ 每步: embed_suffix(x_t, t)
+         │             forward([None, suffix], cache)
+         │             crop(prefix_len)
+         └─ 返回 [B,50,7]
+  └─ queue.extend(chunk[:n_action_steps])
+  └─ return queue.popleft()</code></pre>
+
+<h3>11.2 10 步去噪在算什么</h3>
+<p>第 <code>k</code> 步的输入是当前动作估计 <code>x_t</code> 与时间 <code>t=1−k/10</code>。网络输出速度 <code>v</code>，积分器更新 <code>x ← x − 0.1·v</code>。注意：<strong>每一步都要重新编码后缀</strong>（因为 <code>x_t</code> 变了），但前缀只编码一次。这就是为什么“动作 token 只有 50 个”仍然需要 10 次 Transformer 前向，而不是 1 次。</p>
+<p>如果 <code>n_action_steps=1</code>，下一个控制步会重新观测、重新预填充、重新 10 步去噪；前缀的图像编码与 KV 填充也被重复。评测的算力主要花在这里。若 <code>n_action_steps=50</code>，同一 chunk 执行 50 步，预填充摊销到 50 个控制步，但开环误差累积。这个权衡是面试高频题。</p>
+
+<h3>11.3 延迟预算：项目没测的部分要诚实</h3>
+<p>本项目没有在 T4 上做端到端延迟基准，只记录了评测吞吐（<code>eval_ep_s</code>）。因此不要编造“单次推理 30ms”。可以给出的结构性判断是：450M 模型、10 步去噪、每步 50 个后缀 token，在 T4 上不可能稳定达到 20 Hz 的单步闭环；LIBERO 评测是离线仿真，不受实时约束。真机部署需要至少一项优化：减少 <code>num_steps</code>（精度换速度）、<code>torch.compile</code>、批量/异步推理、动作块执行（增大 <code>n_action_steps</code>）、或 RTC 重叠。</p>
+
+<h3>11.4 RTC：实时 chunk 的直觉</h3>
+<p>动作块之间会出现“接缝”：上一块执行到第 10 步时，新块从当前观测重新预测，前几步可能和旧块不一致，导致抖动。RTC（Real-Time Chunking）把上一块剩余的动作作为软约束，在去噪时引导新块的前缀部分靠近旧块，从而平滑过渡；同时允许推理延迟 <code>inference_delay</code>，用旧块覆盖延迟期间的动作。SmolVLA 的实现支持 <code>supports_rtc=True</code>，但本项目 <code>rtc_config=None</code>，未启用。面试若问“RTC 解决什么”，答“不是提高单步精度，而是解决异步推理下的块间不一致与延迟补偿”。</p>
+
+<h3>11.5 部署视角的三个瓶颈</h3>
+<div class="tbl"><table>
+<tr><th>瓶颈</th><th>表现</th><th>可选优化</th></tr>
+<tr><td>视觉编码</td><td>两路 512×512，SigLIP 前向固定成本</td><td>降分辨率、复用上一帧特征、蒸馏</td></tr>
+<tr><td>去噪步数</td><td>10 次后缀前向，线性延迟</td><td>减少步数、蒸馏少步模型、缓存/并行</td></tr>
+<tr><td>控制频率</td><td>n_action_steps=1 时每步重规划</td><td>增大执行视界、RTC、异步双缓冲</td></tr>
+</table></div>
+<p>回答“如何上真机 10Hz”时，先问清硬件（Orin? 4090?）、相机分辨率、动作维度，再给组合方案；不要直接说“换小模型”，那会丢失语义能力。</p>
+
+<div class="part-open">
+  <div class="pnum">Part IV</div>
+  <h2>数据与训练：从 parquet 到一次梯度</h2>
+  <p>这一部分把“数据怎么变成张量”讲透，并给出可复现的实验设计与统计功效。面试里关于数据管线的问题，往往比模型结构更能区分“真做过”与“看过”。</p>
+</div>
+
+<div class="chnum" id="c12">CHAPTER 12</div>
+<h2>数据集、动作窗口与归一化</h2>
+<p class="lead">LeRobot v2 的数据集不是“一堆图片”，而是带 episode 边界、时间戳、统计量与任务表的列式存储。动作块训练的所有坑，几乎都来自边界与统计量。</p>
+
+<h3>12.1 目录与字段</h3>
+<pre><code>meta/info.json          fps、codebase_version、features、总帧数/episode 数
+meta/tasks.jsonl        任务描述（LIBERO 的 language instruction）
+meta/episodes.jsonl     每条 episode 的长度与任务索引
+meta/stats.json         每列均值/标准差/分位数（归一化用）
+data/chunk-000/*.parquet
+  observation.state     [8] float32
+  action                [7] float32
+  episode_index, frame_index, index, timestamp, task_index
+videos/chunk-000/observation.images.image/*.mp4
+videos/chunk-000/observation.images.wrist_image/*.mp4</code></pre>
+<p>本项目使用 <code>lerobot/libero</code> 全量数据：40 个任务、1693 条示范、约 27 万帧（由 512k 样本 ≈1.9 epoch 反推）。图像以视频存储，读取时按时间戳解码；这也是为什么随机访问的 I/O 成本远高于普通图像数据集，DataLoader 的 worker 数与解码后端会直接影响吞吐。注意：训练用全量 40 任务，评测只在 spatial 的 10 个任务上做。</p>
+
+<h3>12.2 delta_timestamps：动作窗口的定义</h3>
+<p>训练时 <code>delta_timestamps</code> 给动作列配置 <code>[0, 1/20, 2/20, …, 49/20]</code>，给观测列配置 <code>[0]</code>。读取器以当前帧为锚点，计算未来 50 帧的绝对索引；若越过 episode 末尾，<code>delta_window</code> 会把索引<strong>钳到 episode 的最后一帧</strong>，并把对应位置标记为 <code>*_is_pad=True</code>。所以 padding 不是零，而是“重复最后一帧”，再由 mask 在 loss 里剔除。若忘了 mask，模型会学到“任务完成后保持静止”。</p>
+<div class="derive">
+<div class="dt">推导 · 为什么窗口要按时间而不是按帧号</div>
+<p>数据集的 fps 可能因采集设备不同而变化。若直接写“未来 50 帧”，在 10 fps 与 30 fps 上对应的时间跨度差 3 倍，动作块的物理意义就变了。配置 <code>1/fps</code> 的 delta 让窗口始终覆盖 2.5 秒；LeRobot 在读取时把 delta 换算成帧索引，并在 episode 边界做钳位。这也是跨数据集混训时必须统一 fps 的原因。</p>
+</div>
+
+<h3>12.3 归一化：统计量从哪来、存到哪</h3>
+<p>策略的 normalizer 用数据集统计量把 state/action 映射到零均值、单位方差（或分位数区间）。统计量在训练开始时从数据集计算，随 checkpoint 一起保存为 processor 配置；评测时加载同一份统计量，<strong>不能用评测集重新计算</strong>，否则等于泄漏。图像通常不做数据集级标准化，交给视觉编码器自身的归一化；若做了，也要保证训练/评测一致。</p>
+<p>一个常被忽略的细节：动作的第 7 维是夹爪，取值可能是 <code>{-1, +1}</code> 或 <code>[0,1]</code>。用 MEAN_STD 把它标准化后，二值性被破坏，但模型仍能学；若用 QUANTILES 并配合反变换，夹爪会更稳定。LIBERO 的夹爪动作在仿真里是连续值，本项目沿用官方 MEAN_STD。</p>
+
+<h3>12.4 语言与图像</h3>
+<p>语言来自 <code>tasks.jsonl</code> 的 instruction，经 SmolVLM2 的 tokenizer 截断/补齐到 48。LIBERO 的指令很短（如 “pick up the black bowl …”），48 足够；若换成长指令数据集，需要提高上限并重新评估 token 预算。</p>
+<p>图像在 <code>__getitem__</code> 里可选地做随机增强（亮度、对比度、饱和度、色调、裁剪、旋转等），再 resize 到 512。增强是<strong>在线、逐样本</strong>发生的，不是离线写回磁盘；因此同一帧在不同 epoch 会看到不同增强。这提高了数据效率，但也让“训练/评测分布”出现差异——评测不做增强，必须保证 resize 与归一化一致。</p>
+
+<div class="chnum" id="c13">CHAPTER 13</div>
+<h2>LIBERO 环境包装：协议细节决定可比性</h2>
+<p class="lead">同一个模型，换个 reset 方式、少做 10 步预热、或把 n_action_steps 改回 50，成功率可以差十几个点。本章列出所有会影响可比性的开关。</p>
+
+<h3>13.1 观测与动作空间</h3>
+<div class="kv">
+<div>图像</div><div><code>agentview_image</code>（第三人称）与 <code>robot0_eye_in_hand_image</code>（腕部），256×256 RGB，策略侧 resize 到 512</div>
+<div>状态</div><div>8 维：末端位置 3 + 轴角 3 + 夹爪关节位置 2；策略 pad 到 32</div>
+<div>动作</div><div>7 维：末端 delta 位置 3 + delta 轴角 3 + 夹爪 1；范围 [-1,1]</div>
+<div>控制</div><div><code>control_mode="relative"</code> 时底层 controller 用 delta；<code>absolute</code> 时用绝对末端位姿</div>
+<div>频率</div><div>默认 20 Hz；<code>control_freq</code> 可改，但会改变动作块的物理时长</div>
+<div>最大步数</div><div>spatial 280、object 280、goal 300、libero_10 520、libero_90 400</div>
+</div>
+
+<h3>13.2 reset 的三件事</h3>
+<ol>
+<li><strong>选初始状态</strong>：<code>init_state_id = episode_index</code>，reset 时取 <code>init_states[id % len]</code>，然后 <code>id += n_envs</code>。这保证并行环境不重复、跨 batch 覆盖不同布局。</li>
+<li><strong>预热</strong>：<code>num_steps_wait=10</code> 步零动作，让物体落稳。硬 reset 会重建仿真场景，软 reset 跳过重建但可能保留物理状态；两者观测分布不同，不能混用。</li>
+<li><strong>设置控制模式</strong>：<code>relative</code>/<code>absolute</code> 在 reset 后写入 controller 的 <code>use_delta</code>。训练数据是用哪种模式采集的，评测就必须用哪种，否则动作尺度完全错位。</li>
+</ol>
+
+<h3>13.3 为什么评测要 <code>n_action_steps=1</code></h3>
+<p>这是与论文仿真协议对齐的选择：每执行一个动作就重新观测、重新预测，最大化闭环反馈。代价是推理次数是“执行整块”的 50 倍。若为了省时间改成 50，成功率可能上升（更连贯）也可能下降（开环误差），而且与论文不可比。面试时应明确：“我报告的是 n=1 协议；若换 n，需要重新标定，不能直接和论文数字比。”</p>
+
+<div class="box warn">
+<div class="bt">常见不可比因素清单</div>
+<p>①初始状态数量与采样方式；②预热步数；③控制模式（relative/absolute）；④<code>n_action_steps</code>；⑤图像分辨率与是否翻转；⑥最大步数；⑦成功判定阈值；⑧是否用 LIBERO-Plus 变体。任何一项不同，74% 与 90% 的对比都无效。回答“为什么比论文低”之前，先把这张表逐项核对。</p>
+</div>
+
+<div class="chnum" id="c14">CHAPTER 14</div>
+<h2>超参、DDP 与数值稳定性</h2>
+<p class="lead">这一章把训练配方拆成“影响收敛的”和“影响复现的”两类，并解释双卡为什么只有 1.9× 而不是 2×。</p>
+
+<h3>14.1 配方总表</h3>
+<div class="tbl"><table>
+<tr><th>项</th><th>值</th><th>说明</th></tr>
+<tr><td>优化器</td><td>AdamW，β=(0.9,0.95)，wd=1e-10</td><td>官方 preset；wd 很小，避免把动作头压向 0</td></tr>
+<tr><td>学习率</td><td>峰值 1e-4，min 2.5e-6</td><td>warmup 2000，cosine 到 32000</td></tr>
+<tr><td>有效 batch</td><td>64（32/卡 × 2）</td><td>未做梯度累积；DDP 每步 allreduce</td></tr>
+<tr><td>训练步数</td><td>8000 updates</td><td>约 51.2 万样本，约 1.9 epoch（按 1693 条、约 27 万帧计）</td></tr>
+<tr><td>梯度裁剪</td><td>10.0</td><td>对 fp16 尤其重要</td></tr>
+<tr><td>精度</td><td>fp16 autocast + GradScaler</td><td>T4 无 bf16</td></tr>
+<tr><td>冻结</td><td>VLM 全部冻结</td><td>只训练专家 + 投影层</td></tr>
+<tr><td>数据增强</td><td>按配置启用</td><td>消融时必须控制施加密度，见第 15 章</td></tr>
+</table></div>
+
+<h3>14.2 DDP 的实际加速比</h3>
+<p>双卡理想是 2×，实测约 1.9×。损失来自：每步 allreduce 的通信、数据加载与视频解码的串行段、以及每张卡 batch 减半后 kernel 利用率略降。用 <code>torchrun --nproc_per_node=2</code> 启动，<code>accelerate</code> 负责把 batch 切分到两个进程、把梯度求平均。注意：有效 batch 翻倍后<strong>不应</strong>盲目把学习率翻倍；官方配方是 bs64 + 1e-4，本项目直接沿用，避免引入第二个变量。</p>
+
+<h3>14.3 fp16 下的四个稳定化措施</h3>
+<ul>
+<li><strong>GradScaler</strong>：动态放大 loss，防止 fp16 梯度下溢；若连续溢出会自动缩小 scale，日志里应监控。</li>
+<li><strong>梯度裁剪</strong>：裁剪到 10.0，限制偶发大梯度。</li>
+<li><strong>输出 upcast</strong>：动作头输出转 fp32 再算 loss。</li>
+<li><strong>避开端点</strong>：时间 <code>t</code> 限制在 <code>[0.001, 0.999]</code>，避免 <code>1/t</code> 类数值问题（若实现里出现）。</li>
+</ul>
+<p>若出现 loss NaN，排查顺序：①GradScaler 的 scale 是否持续下降；②attention 是否有整行被 mask（softmax 全 <code>-inf</code>）；③归一化后的动作是否有极端值；④学习率是否在 warmup 前就过大。不要一上来就“换 bf16”，T4 上没有这个选项。</p>
+
+<h3>14.4 训练日志该看什么</h3>
+<div class="kv">
+<div>loss</div><div>应平滑下降；本项目 1.14 → 约 0.5。短期波动正常，连续上升要查数据或 lr</div>
+<div>grad_norm</div><div>若长期贴近裁剪阈值 10，说明不稳定或 lr 偏大</div>
+<div>lr</div><div>确认按预期 warmup/decay；这是发现“调度器步数没对齐”的第一信号</div>
+<div>吞吐</div><div>samples/s 或 step/s；DDP 下应接近单卡 1.9×</div>
+<div>显存</div><div>T4 15GB 应留 1–2GB 余量；贴着上限会在长序列样本上 OOM</div>
+</div>
+
+<div class="chnum" id="c15">CHAPTER 15</div>
+<h2>数据增强消融：如何不把结论做废</h2>
+<p class="lead">“加了增强，成功率涨了 4 个点”这句话，在 100 个 episode 上很可能只是噪声。本章给出可辩护的消融设计。</p>
+
+<h3>15.1 混淆变量：施加密度</h3>
+<p>lerobot 的图像增强配置允许 <code>max_num_transforms</code>、<code>random_order</code>、每个变换的 <code>weight</code> 与 <code>p</code>。如果 A 组每样本随机施加 1 个变换、B 组施加 3 个，那么差异既包含“有没有增强”，也包含“增强多强”。正确做法是固定 <code>max_num_transforms</code> 与采样概率，只切换“变换池是否为空/是否启用”，或者做强度阶梯（0/1/2/3 个）而不是二值对比。</p>
+<div class="box warn">
+<div class="bt">项目里踩过的坑</div>
+<p>用点路径覆盖 <code>policy.image_transforms.tfs</code> 的子键时，配置没有真正替换，训练跑完才发现增强是恒等变换。教训：<strong>启动时打印生效配置</strong>，并做一次单样本可视化，确认像素真的变了。仅看 loss 曲线无法判断增强是否生效。</p>
+</div>
+
+<h3>15.2 样本量与功效</h3>
+<p>两比例检验的近似样本量：</p>
+<math display="block">
+<mi>n</mi><mo>≈</mo><mfrac><mrow><msup><mrow><mo>(</mo><msub><mi>z</mi><mrow><mn>1</mn><mo>−</mo><mi>α</mi><mo>/</mo><mn>2</mn></mrow></msub><mo>+</mo><msub><mi>z</mi><mrow><mn>1</mn><mo>−</mo><mi>β</mi></mrow></msub><mo>)</mo></mrow><mn>2</mn></msup><mo>[</mo><msub><mi>p</mi><mn>1</mn></msub><mo>(</mo><mn>1</mn><mo>−</mo><msub><mi>p</mi><mn>1</mn></msub><mo>)</mo><mo>+</mo><msub><mi>p</mi><mn>2</mn></msub><mo>(</mo><mn>1</mn><mo>−</mo><msub><mi>p</mi><mn>2</mn></msub><mo>)</mo><mo>]</mo></mrow><msup><mrow><mo>(</mo><msub><mi>p</mi><mn>1</mn></msub><mo>−</mo><msub><mi>p</mi><mn>2</mn></msub><mo>)</mo></mrow><mn>2</mn></msup></mfrac>
+</math>
+<p>以 <code>p1=0.74, p2=0.84, α=0.05, power=0.8</code> 代入：<code>n≈257/臂</code>。本项目每臂 100 个 episode，只能以约 40% 的功效检测 10 点差异；若真实差异是 5 点，功效更低。因此“增强 +4 点”不应作为定论，只能作为“值得扩大样本的迹象”。</p>
+
+<h3>15.3 配对设计能省样本</h3>
+<p>如果两臂使用<strong>完全相同的初始状态与评测顺序</strong>，就可以做配对比较（McNemar 检验），而不是独立两比例。配对能消掉“任务难度”这个大头方差：同一初始布局下，A 成功 B 失败 / A 失败 B 成功 的不一致对数才是信号。代价是要控制评测顺序与随机种子，且两臂必须都能复现同一初始状态。</p>
+
+<h3>15.4 推荐的消融矩阵</h3>
+<div class="tbl"><table>
+<tr><th>臂</th><th>增强</th><th>训练 seed</th><th>评测</th><th>用途</th></tr>
+<tr><td>A（基线）</td><td>关</td><td>0,1</td><td>100 ep × 2</td><td>估计均值与 seed 方差</td></tr>
+<tr><td>B（轻度）</td><td>1 个/样本，固定池</td><td>0,1</td><td>100 ep × 2</td><td>与 A 同密度对比</td></tr>
+<tr><td>C（重度）</td><td>3 个/样本，同池</td><td>0,1</td><td>100 ep × 2</td><td>强度单调性</td></tr>
+</table></div>
+<p>若算力只够单 seed，必须在报告里写“单 seed 探索性”，并避免用“显著”一词。两个 seed 的均值差若小于 seed 间标准差，结论应是不确定。</p>
+
+<div class="chnum" id="c16">CHAPTER 16</div>
+<h2>评测统计：把 74% 说成一个可信的结论</h2>
+<p class="lead">这一章把“成功率”拆成估计、区间、配对与多重比较。目标不是让你变成统计学家，而是让你在面试里不被一个百分数问倒。</p>
+
+<h3>16.1 点估计与区间</h3>
+<p>100 次独立 rollout 的成功次数服从二项分布。点估计 <code>74/100=0.74</code>；95% Wilson 区间 <code>[0.646, 0.816]</code>。解释：如果重复同样的 100 次评测很多次，约 95% 的区间会覆盖真实成功率。它<strong>不</strong>表示“真实成功率有 95% 概率落在区间内”（贝叶斯语境才这么说）。</p>
+
+<h3>16.2 单任务比较要非常小心</h3>
+<p>10 个任务各 10 个 episode，单任务成功率的分辨率是 10 个百分点，区间宽度约 50 个百分点。spatial_5 的 30% 与 spatial_1 的 100% 看起来差 70 点，但在 n=10 下并不意外。正确做法：①把单任务结果当作“失败模式线索”，不是能力排名；②对短板任务单独扩到 30–50 个 episode；③看视频定位失败类型（抓空、碰撞、超时、夹爪时机）。</p>
+
+<h3>16.3 多重比较</h3>
+<p>如果你比较 10 个任务并挑“最好的那个”汇报，相当于做了 10 次检验，假阳性率会上升。要么预先指定主指标（总成功率），要么对单任务做 Bonferroni/Holm 校正，要么明确标注“探索性分析”。面试官不一定要求你校正，但你要知道这个问题存在。</p>
+
+<h3>16.4 与论文对比的正确姿势</h3>
+<div class="tbl"><table>
+<tr><th>维度</th><th>本项目</th><th>论文（SmolVLA）</th><th>是否可比</th></tr>
+<tr><td>训练预算</td><td>8k updates</td><td>仿真微调 100k steps</td><td>不可直接比；预算差约 12.5×</td></tr>
+<tr><td>训练数据</td><td><code>lerobot/libero</code>：1693 eps / 40 任务</td><td>同一数据集：1693 eps / 40 任务</td><td>同源，基本可比</td></tr>
+<tr><td>评测范围</td><td>仅 spatial 10 任务</td><td>四套件 40 任务</td><td>spatial 列可比，总体均值不可比</td></tr>
+<tr><td>硬件</td><td>2×T4，fp16</td><td>A100/H100，bf16</td><td>数值路径不同</td></tr>
+<tr><td>评测协议</td><td>10 任务 × 10 ep，n_action_steps=1</td><td>同左（仿真）</td><td>协议接近，样本量小</td></tr>
+<tr><td>成功率</td><td>74%（spatial）</td><td>90.0%（spatial）/ 87.3%（四套件均值）</td><td>同套件可比；差距主要来自预算与硬件</td></tr>
+</table></div>
+<p>正确的说法是：“在约 1/12 的训练预算、同一份 LIBERO 数据、T4 fp16 的条件下，我在 spatial 上得到 74%，论文是 90.0%；同套件、同协议，但预算与硬件不同，因此不能声称复现 90%。我把它视为‘方法在低成本下仍可用’的证据，并给出预算阶梯作为下一步。”这句话既诚实又有信息量。</p>
+
+<div class="exercise">
+<div class="xt">练习 16.1 · 统计</div>
+<p>若要把 74% 的估计误差控制在 ±5%（95% 置信），至少需要多少个 episode？若只关心“是否超过 70%”，样本量会怎样变化？</p>
+<details><summary>参考答案</summary>
+<p>用 <code>n≈z²p(1−p)/e²=3.8416×0.74×0.26/0.0025≈296</code>，约 300 个 episode（未含有限总体校正）。若只做单侧“是否 >70%”的检验，临界值从 1.96 降到 1.645，所需样本约 <code>210</code>；但若真实值接近 70%，功效仍然有限。工程上常直接跑 300–500 个 episode 再下结论。</p>
+</details>
+</div>
+
+<div class="part-open">
+  <div class="pnum">Part V</div>
+  <h2>结果、对比与亮点</h2>
+  <p>这一部分把数字放回条件下：74% 是在什么预算、什么数据、什么协议下得到的；与 π0、OpenVLA、ACT 比，SmolVLA 的设计取舍是什么；哪些是真正的亮点，哪些只是工程苦劳。</p>
+</div>
+
+<div class="chnum" id="c17">CHAPTER 17</div>
+<h2>结果解读：74% 到底说明了什么</h2>
+<p class="lead">先看四个数：74% 总成功率、100 次 rollout、8000 updates、1.9× 双卡加速。然后逐个拆归因，避免把“预算不足”说成“方法不行”，也避免把“跑通”说成“复现”。</p>
+
+<div class="mgrid">
+<div class="mcard"><div class="mv">74%</div><div class="ml">总成功率（74/100）<br>Wilson 95% CI [64.6%, 81.6%]</div></div>
+<div class="mcard"><div class="mv">8k</div><div class="ml">优化步数（有效 batch 64）<br>约 51.2 万样本 ≈ 1.9 epoch</div></div>
+<div class="mcard"><div class="mv">4h50m</div><div class="ml">2×T4 DDP 训练时长<br>loss 1.14 → ≈0.5</div></div>
+</div>
+
+<h3>17.1 分任务结果</h3>
+<div class="bars">
+<div class="bar"><span>spatial_0</span><span class="tr"><span class="fl" style="width:90%"></span></span><span class="vv">9/10 · 90%</span></div>
+<div class="bar"><span>spatial_1</span><span class="tr"><span class="fl" style="width:100%"></span></span><span class="vv">10/10 · 100%</span></div>
+<div class="bar"><span>spatial_2</span><span class="tr"><span class="fl" style="width:80%"></span></span><span class="vv">8/10 · 80%</span></div>
+<div class="bar"><span>spatial_3</span><span class="tr"><span class="fl" style="width:80%"></span></span><span class="vv">8/10 · 80%</span></div>
+<div class="bar"><span>spatial_4</span><span class="tr"><span class="fl" style="width:80%"></span></span><span class="vv">8/10 · 80%</span></div>
+<div class="bar"><span>spatial_5</span><span class="tr"><span class="fl low" style="width:30%"></span></span><span class="vv">3/10 · 30%</span></div>
+<div class="bar"><span>spatial_6</span><span class="tr"><span class="fl" style="width:70%"></span></span><span class="vv">7/10 · 70%</span></div>
+<div class="bar"><span>spatial_7</span><span class="tr"><span class="fl" style="width:80%"></span></span><span class="vv">8/10 · 80%</span></div>
+<div class="bar"><span>spatial_8</span><span class="tr"><span class="fl" style="width:70%"></span></span><span class="vv">7/10 · 70%</span></div>
+<div class="bar"><span>spatial_9</span><span class="tr"><span class="fl" style="width:60%"></span></span><span class="vv">6/10 · 60%</span></div>
+</div>
+<p>均值恰为 <code>(9+10+8+8+8+3+7+8+7+6)/10 = 7.4</code>，与总成功率一致（因为每任务 episode 数相同）。分布有两个特征：①九个任务在 60–100%，说明基本操作能力已建立；②spatial_5 单独掉到 30%，是一个<strong>结构性短板</strong>，而不是整体欠拟合。若整体欠拟合，所有任务会一起低；单点塌陷更像“某类空间关系/抓取几何没学会”。</p>
+
+<h3>17.2 差距归因：五个候选，按证据强弱排序</h3>
+<div class="tbl"><table>
+<tr><th>候选原因</th><th>证据</th><th>可信度</th><th>如何验证</th></tr>
+<tr><td>训练预算不足（8k vs 100k）</td><td>论文仿真微调 100k steps @ bs64；本项目 8k</td><td>强</td><td>16k/32k 阶梯，画预算-成功率曲线</td></tr>
+<tr><td>评测覆盖与 seed 方差</td><td>只评 spatial、单 seed，无法区分任务覆盖与随机波动</td><td>中</td><td>跨套件评测 + 第二 seed</td></tr>
+<tr><td>数据增强配方不同</td><td>项目增强配置与论文不完全一致，且曾出现“配置未生效”</td><td>中</td><td>固定密度的消融，先确认生效</td></tr>
+<tr><td>fp16 vs bf16 数值路径</td><td>T4 无 bf16；loss 平稳但精度略低</td><td>弱–中</td><td>同预算下 A100 bf16 对照（成本高）</td></tr>
+<tr><td>实现错误</td><td>loss 正常下降、九任务可用、协议对齐</td><td>低</td><td>单元测试形状/mask；与官方 checkpoint 对齐推理</td></tr>
+</table></div>
+<p>注意“预算 25×”这个说法在本仓库归档里出现过，但它把论文的<strong>预训练</strong> 200k 与<strong>微调</strong> 100k 混了。按微调口径，8k 对 100k 是 <strong>1/12.5</strong>，不是 1/25。面试时主动纠正这个口径，比重复一个夸张的倍数更能体现你读过论文的实验设置。</p>
+<div class="box warn">
+<div class="bt">一处必须自己核对的文档冲突</div>
+<p>归档结果表写“训练数据仅 libero_spatial（单套件）”，但训练命令是 <code>--dataset.repo_id=lerobot/libero</code>（1693 eps / 40 任务），且 512k 样本 ≈1.9 epoch 只与全量数据自洽（若只训 spatial，约 8 万帧会对上 6+ epoch）。因此本书按<strong>命令与 epoch 数</strong>判断：训练用全量 40 任务，评测只跑 spatial。面试若被追问，直接展示命令与 epoch 计算，并说明归档表这行需要修正。</p>
+</div>
+
+<div class="box">
+<div class="bt">能不能说“复现了论文”？</div>
+<p>不能。复现要求同数据、同预算、同协议、同硬件量级。本项目满足“同代码路径、接近的评测协议”，但预算差一个数量级、硬件是 T4、只评了 spatial。准确表述是“<strong>在低成本设定下验证了方法的可用性，并建立了可扩展的基线</strong>”。如果你在简历写“复现 SmolVLA 90%”，面试官一问预算就会穿帮。</p>
+</div>
+
+<h3>17.3 spatial_5 的失败模式假设</h3>
+<p>从任务语义看，spatial 套件考的是“把物体放到/靠近另一个物体的指定空间关系”，spatial_5 通常涉及更精细的相对位置或遮挡。30% 的可能机制：①<strong>深度/尺度估计不稳</strong>：单目图像 + 腕部视角，远距离时像素位移小，末端定位误差被放大；②<strong>语言 grounding 失败</strong>：指令里的空间介词（left/right/behind）没有被可靠绑定到物体；③<strong>抓取时机</strong>：夹爪闭合晚/早，导致后续放置偏移；④<strong>初始状态敏感</strong>：10 个初始布局里只有 3 个在训练分布内。</p>
+<p>验证方法不是“再训久一点”，而是看视频：统计失败回合里机器人停在哪个阶段（未到达、抓空、掉落、放错位置、超时），再把失败帧与训练帧做分布对比。这一步是 M3 的核心，也是面试时“你如何做 error analysis”的素材。</p>
+
+<div class="chnum" id="c18">CHAPTER 18</div>
+<h2>主流 VLA 横向对比：每个设计都在买什么</h2>
+<p class="lead">没有“最强 VLA”，只有在参数、数据、延迟、精度之间做的不同交换。把每个方案的一句话定位说准，比背排行榜更有用。</p>
+
+<div class="tbl"><table>
+<caption>量级为公开资料的近似值；不同论文的评测协议差异很大，不要直接横比成功率。</caption>
+<tr><th>方案</th><th>参数量</th><th>动作头</th><th>预训练数据</th><th>训练方式</th><th>推理</th><th>一句话定位</th></tr>
+<tr><td><strong>SmolVLA</strong></td><td>0.45B</td><td>流匹配，chunk 50</td><td>社区开源机器人数据（481 个数据集、约 2.29 万 episode）</td><td>冻结 VLM，训专家</td><td>10 步 Euler</td><td>消费级 GPU 可训/可跑的“小 VLA”</td></tr>
+<tr><td>π0</td><td>3.3B</td><td>流匹配 + 动作专家</td><td>跨本体大规模（约 1 万小时量级）</td><td>全量/多本体联合</td><td>约 10 步</td><td>高容量通用策略，目标真机高频</td></tr>
+<tr><td>OpenVLA</td><td>7B</td><td>离散 token（256 bin），自回归</td><td>OXE（约 97 万 episode）</td><td>LoRA 微调</td><td>逐维自回归</td><td>把动作当语言 token 的开源基座</td></tr>
+<tr><td>RT-2</td><td>数十 B</td><td>离散 token，自回归</td><td>网页 + 机器人数据共同微调</td><td>全量</td><td>逐维自回归</td><td>证明 VLM 语义可迁移到动作</td></tr>
+<tr><td>ACT</td><td>~0.08B</td><td>CVAE + chunk 50</td><td>单任务示范（50–几百条）</td><td>从头训练</td><td>1 次前向</td><td>低成本单任务模仿学习基线</td></tr>
+<tr><td>Diffusion Policy</td><td>~0.1B</td><td>DDPM，chunk</td><td>单/多任务示范</td><td>从头训练</td><td>多步去噪</td><td>扩散动作头的经典基线</td></tr>
+<tr><td>Octo</td><td>~0.09B</td><td>扩散头</td><td>OXE 子集（约 80 万 episode）</td><td>微调</td><td>多步</td><td>轻量通用策略，易微调</td></tr>
+</table></div>
+
+<h3>18.1 四条主轴</h3>
+<div class="tbl"><table>
+<tr><th>轴</th><th>一端</th><th>另一端</th><th> trade-off</th></tr>
+<tr><td>动作表示</td><td>连续回归/流匹配（SmolVLA、π0、DP）</td><td>离散 token（RT-2、OpenVLA）</td><td>连续头精度高、延迟低；离散头复用 LLM 词表与预训练，但量化误差与逐维解码慢</td></tr>
+<tr><td>容量</td><td>0.1–0.5B（ACT、SmolVLA、Octo）</td><td>3–55B（π0、RT-2）</td><td>大模型语义强、泛化好；小模型可本地训练、延迟低、数据需求小</td></tr>
+<tr><td>训练范围</td><td>冻结骨干 + 小头（SmolVLA）</td><td>全量/大规模联合（π0、RT-2）</td><td>冻结省显存、抗过拟合；全量上限高但需大数据</td></tr>
+<tr><td>执行方式</td><td>整块开环（ACT 常用）</td><td>逐步闭环（SmolVLA 评测 n=1）</td><td>开环吞吐高、易累积误差；闭环鲁棒但推理频繁</td></tr>
+</table></div>
+
+<h3>18.2 为什么 SmolVLA 选“冻结 + 流匹配 + 小专家”</h3>
+<p>它的目标不是刷最高成功率，而是<strong>把 VLA 的训练门槛降到消费级</strong>。在这个目标下：冻结 VLM 让显存与优化器状态可控；流匹配比 DDPM 少步、比离散 token 平滑；小专家（0.75 宽）让动作头容量与数据量匹配。代价是：①上限受 VLM 与数据限制；②冻结可能损失本体特有的视觉适应；③10 步去噪仍不够快，真机需要工程优化。面试时把“目标函数”说清楚，比争论“哪个模型更强”更有说服力。</p>
+
+<h3>18.3 与 π0 的关系</h3>
+<p>SmolVLA 的架构明显受 π0 启发：VLM 前缀 + 动作专家 + 流匹配 + 交错 SA/CA。差别在规模与数据：π0 用 3.3B 与跨本体大数据，SmolVLA 用 0.45B 与社区数据，并把“可复现、可负担”作为一等目标。可以把 SmolVLA 理解为“π0 配方的小型化与开源化”，而不是独立的新范式。这个判断在面试里很加分，但要注意别说得像“抄”——应强调工程取舍与可访问性。</p>
+
+<div class="box warn">
+<div class="bt">不要背错的对比</div>
+<p>①OpenVLA 是 7B、离散动作 token，不是流匹配；②π0 是 3.3B、流匹配，不是扩散；③ACT 是 CVAE + chunk，不是 Transformer 策略的简单回归；④RT-2 的动作 token 来自 VLM 词表重映射，不是额外训练一个 tokenizer。这四条是高频“一票否决”点。</p>
+</div>
+
+<div class="chnum" id="c19">CHAPTER 19</div>
+<h2>项目亮点、局限与三个 STAR 故事</h2>
+<p class="lead">亮点要区分“研究贡献”与“工程贡献”。本项目没有新算法，价值在于低成本可复现、协议严谨、基础设施可靠。把这三件事讲成故事，比包装成“创新”更可信。</p>
+
+<h3>19.1 五个亮点（按面试价值排序）</h3>
+<ol>
+<li><strong>低成本可复现基线</strong>：2×T4、约 5 小时、8000 updates 得到 74%，并公开 checkpoint、评测日志与 100 个 rollout 视频。它让“没有 A100 的人”也能从同一起点做改进。</li>
+<li><strong>协议对齐意识</strong>：固定 <code>n_action_steps=1</code>、10 任务 × 10 episode、记录初始状态与预热步数；主动给出 Wilson 区间，而不是只报点估计。</li>
+<li><strong>可恢复的训练基础设施</strong>：全状态 checkpoint + Hub 备份 + 启动自检，把 12 小时会话的硬切损失压到约 35 分钟。</li>
+<li><strong>fp16 迁移的工程细节</strong>：不是改一个 dtype，而是 fp32 权重 + autocast + GradScaler + 输出 upcast + 梯度裁剪的组合。</li>
+<li><strong>诚实的失败分析</strong>：承认 74% ≠ 90%，承认 spatial_5 是短板，并把“预算/数据/硬件”作为可检验的归因，而不是找借口。</li>
+</ol>
+
+<h3>19.2 五个局限（主动说，别等追问）</h3>
+<ul>
+<li><strong>评测只覆盖 spatial、单 seed</strong>：没有四套件评测，也没有多 seed 方差；结论是“该设定下的基线”，不是“方法的上限”。</li>
+<li><strong>预算差一个数量级</strong>：8k vs 100k，无法回答“训练到 100k 能否到 90%”。</li>
+<li><strong>没有真机</strong>：LIBERO 是准静态仿真，接触、光照、标定误差都没有覆盖；不能声称真机可部署。</li>
+<li><strong>没有延迟基准</strong>：只记录评测吞吐，没有测单次 chunk 延迟与 20 Hz 闭环可行性。</li>
+<li><strong>增强消融不完整</strong>：配置曾静默失效，样本量也不足以检测小差异；相关结论只能算探索性。</li>
+</ul>
+
+<h3>19.3 STAR 故事一：T4 上的 fp16 迁移</h3>
+<div class="kv">
+<div>S（情境）</div><div>官方 SmolVLA 预设按 bf16 配置，Kaggle 只有 2×T4（SM75），不支持 bf16；直接跑会报错或数值不稳。</div>
+<div>T（任务）</div><div>在不改变模型结构与超参的前提下，让 450M 策略在 15GB 卡上稳定训练 8000 步。</div>
+<div>A（行动）</div><div>把 VLM 权重落成 fp32；启用 fp16 autocast + GradScaler；冻结骨干把优化器状态压到 100M；输出转 fp32 再算 MSE；梯度裁剪 10.0；每 2000 步存全状态 checkpoint。</div>
+<div>R（结果）</div><div>loss 从 1.14 平滑降到约 0.5，无 NaN；双卡 1.9×，4h50m 完成；80 个 rollout 全部产出。</div>
+</div>
+<p><strong>追问预案</strong>：“为什么不用 bf16？”——T4 硬件不支持。“fp16 不会溢出吗？”——GradScaler 动态缩放 + fp32 master weights + 输出 upcast；“如果 NaN 怎么办？”——先看 scale 曲线与 attention 全 mask 行。</p>
+
+<h3>19.4 STAR 故事二：会话被回收后的续训</h3>
+<div class="kv">
+<div>S</div><div>Kaggle 批处理会话在训练中途被回收，/kaggle/working 保存不完整，checkpoint 缺 processor 文件。</div>
+<div>T</div><div>不重跑已完成的步数，从最近一个完整 checkpoint 继续到目标步数。</div>
+<div>A</div><div>改为每 1000 步保存并全量上传 <code>pretrained_model</code> + <code>training_state</code>；启动时递归扫描 Hub 上的累计步数，校验 <code>model.safetensors</code> 与 processor 四件套；残缺目录删除后由 trainer 按标准路径重建；日志打印恢复步数与学习率。</div>
+<div>R</div><div>最多损失约 35 分钟；多次会话接力后累计到目标步数，没有重复训练。</div>
+</div>
+<p><strong>追问预案</strong>：“怎么保证 checkpoint 完整？”——先写临时目录再原子 rename，上传后回读校验；“为什么缺 tokenizer？”——只上传了顶层文件，漏了子目录；“怎么防再次发生？”——启动自检 + 备份命名带全局步数。</p>
+
+<h3>19.5 STAR 故事三：把 74% 说成可信结论</h3>
+<div class="kv">
+<div>S</div><div>首版报告只写了“74%”，并引用了错误的 Wilson 区间与“25× 预算差”。</div>
+<div>T</div><div>让结论经得起统计与协议两方面的追问。</div>
+<div>A</div><div>复算 Wilson 得 [64.6%, 81.6%]；核对论文微调预算为 100k，改为 12.5×；列出 8 项不可比因素；对 spatial_5 单独做失败模式分析，而不是用总均值掩盖。</div>
+<div>R</div><div>结论从“我复现了 74%”变成“我在 1/12 预算下建立了可扩展基线，短板在 spatial_5，下一步是预算阶梯与失败诊断”。</div>
+</div>
+<p>这个故事的价值在于展示<strong>自我纠错</strong>。面试官往往更在意你发现错误后的处理方式，而不是你从不出错。</p>
+
+<div class="part-open">
+  <div class="pnum">Part VI</div>
+  <h2>面试实战：25 题、8 道白板、4 周计划</h2>
+  <p>这一部分不引入新知识，只做三件事：把知识压缩成可复述的答案、把推导压缩成可白板的步骤、把学习压缩成可执行的日程。</p>
+</div>
+
+<div class="chnum" id="c20">CHAPTER 20</div>
+<h2>分层题库：从自我介绍到研究判断</h2>
+<p class="lead">每题给“问法、答法、陷阱”。答法不是逐字稿，而是要点骨架；面试时按对方兴趣展开，不要一次背完。</p>
+
+<h3>A 层 · 项目与动机</h3>
+
+<div class="q"><div class="qh"><div class="qn">Q1</div><div class="qt">用一分钟介绍这个项目。</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>“我在 2×T4 上用 8000 次更新微调了 450M 的 SmolVLA，在 LIBERO-Spatial 上按 10 任务 × 10 episode 评测，成功率 74%，Wilson 95% 区间 [64.6%, 81.6%]。项目主要解决三件事：T4 无 bf16 的精度迁移、无交互环境下的断点续训、以及评测协议与论文对齐。结论是方法在 1/12 训练预算下仍可用，短板集中在 spatial_5。”</p>
+<div class="lbl">追问钩子</div>
+<p>主动留三个钩子：fp16 怎么稳、续训怎么保证完整、74% 与 90% 怎么比。让面试官顺着你准备过的方向问。</p>
+<div class="trap">陷阱：不要说“我复现了论文 90%”。预算与数据都不同，这句话会被立刻拆穿。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q2</div><div class="qt">为什么选 SmolVLA，而不是 OpenVLA 或 π0？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<ul>
+<li><strong>资源约束</strong>：只有双 T4 / 消费级卡，7B 的 OpenVLA 与 3.3B 的 π0 微调成本高；450M 能在 15GB 内训练。</li>
+<li><strong>架构代表性</strong>：SmolVLA 覆盖了当前主流配方（VLM 前缀 + 动作专家 + 流匹配 + 交错注意力），学一个等于理解一类。</li>
+<li><strong>可复现性</strong>：官方提供 base 权重、LeRobot 集成与 LIBERO 评测脚本，适合做受控实验。</li>
+<li><strong>研究空白</strong>：小模型在低预算下的失败模式（如 spatial_5）本身值得研究。</li>
+</ul>
+<div class="trap">陷阱：不要贬低大模型“没用”。正确说法是“在我的资源约束下，SmolVLA 的性价比最高；大模型在泛化与多本体上仍有优势”。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q3</div><div class="qt">这个项目里哪些是你做的，哪些是官方代码？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>“模型与训练框架来自 LeRobot/SmolVLA 官方；我负责的是：①在 Turing 卡上做 fp16 迁移与显存调优；②搭建可恢复的训练/评测流水线（checkpoint 备份、续训扫描、日志信标）；③按论文协议跑评测并做统计与失败分析；④复现论文结果并定位差距。没有改模型结构，也没有提出新算法。”</p>
+<div class="trap">陷阱：把官方仓库说成自己写的。面试官很可能读过源码，一问 <code>embed_suffix</code> 就露馅。诚实划分边界反而加分。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q4</div><div class="qt">最大的技术难点是什么？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>“不是模型，而是<strong>状态管理</strong>。训练会话随时会被回收，checkpoint 又包含权重、优化器、调度器、processor 四类状态；任何一类缺失都会导致要么从头再来，要么静默换了一个训练过程。我把恢复逻辑做成启动自检：扫描最新完整 checkpoint、校验文件、打印恢复步数与学习率，才把不确定性压下去。”</p>
+<div class="trap">陷阱：说“调参很难”。调参不是难点，可验证的状态与因果归因才是。</div>
+</div></div>
+
+<h3>B 层 · 架构</h3>
+
+<div class="q"><div class="qh"><div class="qn">Q5</div><div class="qt">画出 SmolVLA 的整体架构。</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>左边是 VLM 前缀：两路图像各 64 token（SigLIP + pixel shuffle）、语言 ≤48、状态 1，共 ≤177，16 层、宽 960，冻结。右边是动作专家：50 个动作 token，16 层、宽 720，隔层 SA/CA，可训练。中间通过共享注意力的 K/V 与交叉注意力连接。输出经 <code>action_out_proj</code> 回到 32 维，取前 7 维。训练用流匹配速度回归，推理 10 步 Euler。</p>
+<div class="trap">陷阱：把“动作专家”画成独立的第二个 VLM。它没有词表、没有图像输入，只有动作与时间。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q6</div><div class="qt">为什么要冻结 VLM？全量微调不是更强吗？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<ul>
+<li><strong>数据</strong>：LIBERO 全量 1693 条示范覆盖 40 个任务，但单任务样本很少；全量微调 450M 容易破坏预训练语义先验。</li>
+<li><strong>显存</strong>：Adam 状态从约 5.4GB 降到 1.2GB，T4 才能放下。</li>
+<li><strong>稳定性</strong>：小数据 + 大学习率 + fp16，全量训练更容易出现灾难性遗忘与 loss spike。</li>
+<li><strong>可迁移</strong>：冻结骨干后，动作专家可以独立替换/多任务共享。</li>
+</ul>
+<p>但这不是绝对的：数据足够大时，全量或 LoRA 可能更好；这是可消融的假设，不是教条。</p>
+<div class="trap">陷阱：说“冻结一定更好”。应说“在本项目的数据/硬件约束下更稳”，并给出验证方式。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q7</div><div class="qt">动作专家为什么是 0.75 宽？宽度不同怎么做交叉注意力？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>0.75 是容量/延迟的折中：动作分布比语言简单，720 维足够；同时减少参数与计算。交叉注意力里，Q 来自专家（720 维），K/V 从前缀缓存读取后，经专家自己的 <code>k_proj/v_proj</code> 投影到专家的 head 布局；<code>head_dim</code> 与 VLM 对齐，保证可以实现。不是直接拿 VLM 的 K/V 做点积。</p>
+<div class="trap">陷阱：说“专家就是 VLM 的最后几层”。它不是共享权重，而是独立参数、并行流。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q8</div><div class="qt">解释 prefix-LM 的注意力掩码。</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>每个 token 有 0/1 的 <code>att_mask</code>，做 cumsum 得 <code>c</code>；query <code>i</code> 能看 key <code>j</code> 当且仅当 <code>c_j ≤ c_i</code>。图像与语言都是 0，构成一个双向块；状态是 1，开启新块，能看全部前缀；50 个动作都是 1，cumsum 递增，形成因果链。效果是：前缀看不到动作，状态/动作能看到完整上下文，动作之间只能看历史。</p>
+<div class="trap">陷阱：把 <code>att_mask</code> 说成 padding mask。padding 由另一张 <code>pad_mask</code> 负责。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q9</div><div class="qt">为什么视觉 token 要压到 64？为什么只取 16 层？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>512×512、patch 16 是 1024 个 patch；两路相机不压缩就是 2048 token，注意力与 KV cache 成本约高两个数量级。pixel shuffle 4×4 把 1024 压到 64，保留粗粒度空间信息，对桌面操作足够。16 层是精度/延迟折中：动作预测不需要完整语言深度，且与专家层一一对应，便于交错 SA/CA。</p>
+<div class="trap">陷阱：说“64 是论文规定的”。它是实现选择，可以消融（32/128），但要重新调训练预算。</div>
+</div></div>
+
+<h3>C 层 · 流匹配</h3>
+
+<div class="q"><div class="qh"><div class="qn">Q10</div><div class="qt">流匹配和扩散的区别是什么？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>两者都学“从噪声到数据”的生成过程。扩散学噪声预测 <code>ε</code>，沿随机前向过程的逆过程走，通常需要较多步与特定调度器；流匹配直接学速度场 <code>v=dx/dt</code>，用直线（或近直线）概率路径，训练目标是 <code>‖v_θ−(ε−a)‖²</code>，推理用 Euler 积分，10 步即可。流匹配更简单、步数更少，但仍是迭代生成，不是一次前向。</p>
+<div class="trap">陷阱：说“流匹配没有随机性所以是确定性模型”。训练时仍采样 <code>ε</code> 与 <code>t</code>；推理从随机噪声出发，输出仍有多模态。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q11</div><div class="qt">在白板上推出流匹配的损失。</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>设 <code>x_t=tε+(1−t)a</code>，则 <code>dx_t/dt=ε−a</code>。令网络预测 <code>v_θ(x_t,t,o,ℓ)</code>，最小化 <code>E‖v_θ−(ε−a)‖²</code>。对固定 <code>(x_t,t)</code>，最优解是条件期望 <code>E[ε−a|x_t]</code>，即把当前点推向数据流形的平均方向。训练时 <code>t∼Beta(1.5,1)</code>、<code>ε∼N(0,I)</code>，一次采样即可，无需展开时间步。</p>
+<div class="trap">陷阱：把目标写成 <code>a</code> 或 <code>ε</code>。本项目目标是速度 <code>ε−a</code>；写成别的会与积分器符号不一致。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q12</div><div class="qt">10 步去噪能不能改成 1 步？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>可以尝试，但会损失精度：1 步相当于假设速度场沿整条路径恒定，而网络预测只在局部准确；误差会直接体现在动作上。常见替代是蒸馏少步模型、consistency 模型、或把 <code>num_steps</code> 降到 3–5 后重训/微调。直接改推理步数而不重训，通常掉点。面试要区分“改配置”和“改训练目标”。</p>
+<div class="trap">陷阱：说“Euler 是精确的所以 1 步也行”。线性路径下若速度预测完美才精确；现实网络有误差。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q13</div><div class="qt">为什么时间采样用 Beta(1.5, 1)，而不是均匀分布？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>Beta(1.5,1) 的密度是 <code>1.5t^{0.5}</code>，均值 0.6，偏向高噪声端。高噪声时全局结构未定，预测更难、梯度信息更多；低噪声时动作块差异小，过多采样浪费容量。这是经验选择，不是理论最优；可用均匀分布或 logit-normal 做对照，观察收敛与最终成功率。</p>
+<div class="trap">陷阱：把它说成“必须”。它是超参，换数据集可能需要重调。</div>
+</div></div>
+
+<h3>D 层 · 数据与训练</h3>
+
+<div class="q"><div class="qh"><div class="qn">Q14</div><div class="qt">动作块在数据里怎么取？越界怎么办？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>用 <code>delta_timestamps</code> 配 <code>[0,1/fps,…,49/fps]</code>，以当前帧为锚点取未来 50 帧。越过 episode 末尾时，<code>delta_window</code> 把索引钳到 episode 最后一帧，并标记 <code>action_is_pad=True</code>；loss 里用这个 mask 剔除。图像观测只取当前帧（delta 0），不做未来帧。</p>
+<div class="trap">陷阱：说“padding 补零”。实际是重复边界帧 + mask；补零会让模型学到“动作突然归零”。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q15</div><div class="qt">loss 的分母是什么？为什么不是 B×50×32？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>先切到真实动作维度 7，再乘 <code>~action_is_pad</code>，分母是“有效步数 × 7”。因为后 25 维是 padding、episode 末尾的步也是 padding，二者都不应计入。用 B×50×32 会把有效信号稀释约 4.6 倍；用 B×50×7 但仍含 padding 会稀释约 9%（取决于 padding 比例）。</p>
+<div class="trap">陷阱：只看代码里的 <code>losses.mean()</code>。真正反传的是 masked sum / num_valid，日志里的均值可能只是观测指标。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q16</div><div class="qt">归一化的统计量会不会泄漏？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>统计量在训练集上计算，随 checkpoint 保存；评测加载同一份，不用评测数据重算。若在评测时用当前 batch 的均值方差，就是泄漏，而且会让不同 batch 的尺度漂移。图像若做数据集级标准化也一样，训练/评测必须共用配置。</p>
+<div class="trap">陷阱：说“归一化只是预处理，不影响泄漏”。统计量是数据信息，用测试集算就是泄漏。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q17</div><div class="qt">双卡为什么只有 1.9×？fp16 怎么保证稳定？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>1.9× 来自 allreduce 通信、视频解码的串行段、以及每卡 batch 减半后的利用率损失。fp16 稳定靠四件事：GradScaler 动态缩放、fp32 master weights、动作输出 upcast、梯度裁剪 10.0；再加时间端点裁剪。监控 GradScaler 的 scale 与 grad_norm，异常时先查 attention 全 mask 行。</p>
+<div class="trap">陷阱：说“fp16 和 bf16 一样，只是精度低一点”。bf16 的指数范围与 fp32 相同，fp16 范围窄，才需要 scaler。</div>
+</div></div>
+
+<h3>E 层 · 评测与实验</h3>
+
+<div class="q"><div class="qh"><div class="qn">Q18</div><div class="qt">74% 这个结果可信吗？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>“点估计 74/100，Wilson 95% 区间 [64.6%, 81.6%]。可信度取决于协议：10 任务 × 10 episode、固定初始状态集、<code>n_action_steps=1</code>、10 步预热、relative 控制。它的精度足以区分“明显好/明显差”，但不足以支撑 3–5 点的改进结论；单任务 10 个样本更不能排名。”</p>
+<div class="trap">陷阱：只报 74% 不报区间；或把区间写成 [63.0%, 83.2%]（与标准 Wilson 不符）。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q19</div><div class="qt">为什么评测用 n_action_steps=1？不是很慢吗？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>为了对齐论文仿真协议：每步重规划，最大化闭环反馈，避免开环误差累积。慢是事实，评测是离线仿真，不受实时约束；用吞吐换可比性。真机上会选 5–20 或 RTC，因为 20 Hz 下每步跑 10 次去噪不现实。</p>
+<div class="trap">陷阱：说“n=1 一定比 n=50 好”。两者是权衡；n=50 可能更连贯，也可能累积误差。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q20</div><div class="qt">spatial_5 只有 30%，你怎么诊断？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>先看 10 个 rollout 视频，把失败分成四类：未到达、抓空/滑落、放错位置、超时。再看失败帧的观测与训练分布差异（物体位置、遮挡、腕部视角）。然后做单变量干预：①把该任务示范过采样；②提高该任务评测 episode 到 50 个确认不是噪声；③检查语言 grounding（换同义指令是否仍失败）；④用 16k checkpoint 看是否预算问题。只有定位到阶段，才谈改进。</p>
+<div class="trap">陷阱：直接说“加数据/训久一点”。没有失败分类的改进是碰运气。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q21</div><div class="qt">怎么做数据增强消融才不被质疑？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>固定施加密度（每样本变换数、概率、顺序），只切换变换池；启动时打印生效配置并可视化单样本，确认不是恒等；两臂同数据、同步数、同评测初始状态；样本量按功效算（检测 10 点差异约 257/臂），至少两个训练 seed；报告均值、区间与 seed 方差，不轻易说“显著”。</p>
+<div class="trap">陷阱：A 组 1 个变换、B 组 3 个变换，然后把差异归因于“有没有增强”。</div>
+</div></div>
+
+<h3>F 层 · 部署与研究判断</h3>
+
+<div class="q"><div class="qh"><div class="qn">Q22</div><div class="qt">要让这个模型在真机 10 Hz 跑，你怎么办？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>先测瓶颈：视觉编码、10 步去噪、控制频率各占多少。然后组合优化：①增大 <code>n_action_steps</code> 或 RTC 降低重规划频率；②<code>torch.compile</code>/TensorRT、fp16/INT8；③异步双缓冲，推理与执行重叠；④减少 <code>num_steps</code> 或蒸馏少步模型；⑤降相机分辨率/帧率。不要只换小模型，那会改变任务能力。</p>
+<div class="trap">陷阱：给一个没有测量依据的延迟数字。应说“项目未测，需先做 profile”。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q23</div><div class="qt">如果给你 10 倍算力，你先做什么？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>按信息量排序：①预算阶梯 16k/32k/64k，画预算-成功率曲线，回答“差距是否只是训练量”；②四套件联合训练，检验单套件是否限制泛化；③失败诊断驱动的数据重采样（spatial_5）；④最后才是 LoRA/全量微调对照。不会先调超参，因为当前最大的不确定性是预算与数据，不是 lr。</p>
+<div class="trap">陷阱：说“先上更大模型”。那会同时改变容量、数据与预算，无法归因。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q24</div><div class="qt">SmolVLA 的上限在哪？什么时候该选 π0/OpenVLA？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>SmolVLA 的上限受 450M 容量、冻结骨干与社区数据限制；在单任务/少任务、消费级硬件、需要快速迭代时选它。若需要跨本体泛化、复杂语言推理、大规模多任务，π0（3.3B、跨本体）或 OpenVLA（7B、OXE、离散 token）更合适，但训练/推理成本高。选择应看“数据规模 × 延迟预算 × 硬件”，不是看榜单。</p>
+<div class="trap">陷阱：说“小模型迟早全面取代大模型”。容量与泛化的权衡不会消失。</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">Q25</div><div class="qt">你认为 VLA 未来 1–2 年的关键问题是什么？</div></div><div class="qb">
+<div class="lbl">答法</div>
+<p>四个：①<strong>数据</strong>：跨本体、可复用的动作数据仍稀缺，合成与视频预训练是方向；②<strong>评测</strong>：仿真与真机的相关性不足，需要标准化协议与统计报告；③<strong>延迟/可靠性</strong>：10 步去噪与闭环频率的矛盾，需要少步生成、异步与安全回退；④<strong>长程与记忆</strong>：当前 chunk 只覆盖 2.5 秒，多阶段任务需要层次化策略与记忆。我的项目正好在②③上提供了低成本基线。</p>
+<div class="trap">陷阱：泛泛说“多模态大模型会解决一切”。要给具体瓶颈与可验证方向。</div>
+</div></div>
+
+<div class="chnum" id="c21">CHAPTER 21</div>
+<h2>白板推导：8 道必须能当场写出的题</h2>
+<p class="lead">白板题考的不是背诵，而是“从定义出发、符号不乱、收尾能解释”。每题给步骤与一句收尾话，练习时遮住答案自己写。</p>
+
+<div class="exercise">
+<div class="xt">白板 1 · 流匹配损失</div>
+<p><strong>题</strong>：从 <code>x_t=tε+(1−t)a</code> 出发，推出训练目标，并说明为什么最优解是条件期望。</p>
+<details><summary>步骤</summary>
+<p>① 对 <code>t</code> 求导：<code>dx_t/dt=ε−a</code>。② 令网络输出 <code>v_θ(x_t,t,c)</code>，最小化 <code>E‖v_θ−(ε−a)‖²</code>。③ 对固定 <code>(x_t,t)</code>，逐点最小化 <code>E[‖v−(ε−a)‖²|x_t]</code>，对 <code>v</code> 求导令零，得 <code>v*=E[ε−a|x_t]</code>。④ 收尾：这是回归，不是 ELBO；训练一次采样 <code>t,ε</code> 即可。</p>
+</details>
+</div>
+
+<div class="exercise">
+<div class="xt">白板 2 · 欧拉积分与符号</div>
+<p><strong>题</strong>：写出 <code>NOISE_AT_ONE</code> 下从 <code>t=1</code> 到 <code>0</code> 的 10 步更新，并用一维例子验证。</p>
+<details><summary>步骤</summary>
+<p>① <code>Δt=−0.1</code>，<code>x_{k+1}=x_k+Δt·v_θ(x_k,t_k)</code>，即 <code>x−0.1v</code>。② 一维：<code>a=1,ε=−0.5,t=0.7</code>，<code>x=−0.05,v=−1.5</code>，一步后 <code>0.10</code>，与解析解 <code>t=0.6</code> 的 <code>0.10</code> 一致。③ 收尾：线性路径下积分无离散误差，误差来自网络；符号写反会发散。</p>
+</details>
+</div>
+
+<div class="exercise">
+<div class="xt">白板 3 · 掩码矩阵</div>
+<p><strong>题</strong>：<code>att_mask=[0,0,0,1,1]</code>，画出 5×5 可见矩阵并解释。</p>
+<details><summary>步骤</summary>
+<p>① cumsum=[0,0,0,1,2]。② 判据 <code>c_j≤c_i</code>：前三行只能看前三列；第 4 行看 0–3；第 5 行看 0–4。③ 收尾：前三 token 双向（图像/语言），后两 token 因果（状态/动作），前缀看不到后缀。</p>
+</details>
+</div>
+
+<div class="exercise">
+<div class="xt">白板 4 · loss 分母</div>
+<p><strong>题</strong>：B=32、每样本 50 步、其中 3 条各 47 步 padding，求分母；若误用 <code>mean()</code> 会怎样？</p>
+<details><summary>步骤</summary>
+<p>① 有效步数 <code>32×50−3×47=1459</code>。② 分母 <code>1459×7=10213</code>。③ <code>mean()</code> 分母 11200，稀释约 9%；若连 32 维平均，分母 51200，稀释约 4.6 倍。④ 收尾：padding 是重复边界帧，不 mask 会学到静止动作。</p>
+</details>
+</div>
+
+<div class="exercise">
+<div class="xt">白板 5 · KV cache</div>
+<p><strong>题</strong>：前缀 177、后缀 50、10 步；比较有无缓存的计算量，并估算 16 层、5 KV 头、64 维、B=10 的缓存显存。</p>
+<details><summary>步骤</summary>
+<p>① 无缓存每步 <code>(227)²=51,529</code>，10 步 515,290。② 有缓存每步 <code>50²+50×177=11,350</code>，10 步 144,829，约 3.56× 省。③ 显存 <code>16×2×10×5×177×64×2B≈36MB</code>。④ 收尾：前缀不到 200 token，缓存不是显存瓶颈；每步要 <code>crop</code> 回前缀长度。</p>
+</details>
+</div>
+
+<div class="exercise">
+<div class="xt">白板 6 · token 预算</div>
+<p><strong>题</strong>：512×512、patch 16、pixel shuffle 4×4、两相机，算视觉 token；若不做 shuffle，注意力成本变多少？</p>
+<details><summary>步骤</summary>
+<p>① 每帧 patch 数 <code>(512/16)²=1024</code>。② shuffle 后 <code>1024/16=64</code>，两路 128。③ 不 shuffle 是 2048，前缀从 177 变 2097，序列约 12× 长，注意力约 144×。④ 收尾：64 是让 450M 模型在消费级卡上可训的关键。</p>
+</details>
+</div>
+
+<div class="exercise">
+<div class="xt">白板 7 · Wilson 区间</div>
+<p><strong>题</strong>：74/100，求 95% Wilson 区间。</p>
+<details><summary>步骤</summary>
+<p>① <code>p̂=0.74,n=100,z=1.96</code>。② 中心 <code>(p̂+z²/2n)/(1+z²/n)=0.7311</code>。③ 半宽 <code>z√(p̂(1−p̂)/n+z²/4n²)/(1+z²/n)=0.0848</code>。④ 区间 <code>[0.646,0.816]</code>。⑤ 收尾：解释为“重复实验的区间覆盖率”，不是“真值概率”。</p>
+</details>
+</div>
+
+<div class="exercise">
+<div class="xt">白板 8 · 样本量与配对</div>
+<p><strong>题</strong>：检测 74%→84% 的差异，80% 功效、α=0.05，需要多少样本？若两臂共用初始状态，如何更省？</p>
+<details><summary>步骤</summary>
+<p>① <code>n≈(1.96+0.84)²[0.74×0.26+0.84×0.16]/0.1²≈257/臂</code>。② 配对：同一初始状态做 A/B，比较不一致对，用 McNemar；任务难度方差被消掉，所需样本通常显著减少。③ 收尾：100/臂只能检测大差异，小改进必须扩样本或多 seed。</p>
+</details>
+</div>
+
+<div class="chnum" id="c22">CHAPTER 22</div>
+<h2>四周复现与深化计划</h2>
+<p class="lead">计划的原则是“每周一个可验收的产物”，不是“每周读一堆论文”。所有命令都在本仓库可执行；没有 GPU 时用 CPU 跑形状测试与单样本前向。</p>
+
+<h3>第 1 周 · 把推理链路跑通</h3>
+<div class="tbl"><table>
+<tr><th>天</th><th>任务</th><th>验收</th></tr>
+<tr><td>1</td><td>读 7 个核心文件，画出数据流；记录每个张量形状</td><td>能不看书画出前缀/后缀/mask</td></tr>
+<tr><td>2</td><td>加载官方 base checkpoint，跑单样本 <code>predict_action_chunk</code></td><td>输出 <code>[1,50,7]</code>，无 NaN；记录耗时</td></tr>
+<tr><td>3</td><td>用 <code>lerobot-eval</code> 跑 1 任务 × 1 episode</td><td>生成视频与 <code>eval_info.json</code></td></tr>
+<tr><td>4</td><td>对照 <code>embed_prefix/suffix</code> 打印形状与 mask</td><td>mask 矩阵与第 3 章表格一致</td></tr>
+<tr><td>5</td><td>手算一遍 loss 分母，与代码打印对比</td><td>误差为 0</td></tr>
+<tr><td>6–7</td><td>读 SmolVLA 论文方法节 + π0 架构节</td><td>写出 5 条异同</td></tr>
+</table></div>
+
+<h3>第 2 周 · 把训练与恢复跑通</h3>
+<div class="tbl"><table>
+<tr><th>天</th><th>任务</th><th>验收</th></tr>
+<tr><td>1</td><td>用 1% 数据跑 50 步，确认 loss 下降、显存峰值</td><td>无 OOM；记录 tokens/s</td></tr>
+<tr><td>2</td><td>跑 2000 步，开 <code>save_freq=500</code></td><td>产出 4 个完整 checkpoint</td></tr>
+<tr><td>3</td><td>杀进程，从 checkpoint 续训 100 步</td><td>恢复步数、lr、优化器状态正确</td></tr>
+<tr><td>4</td><td>做一次 fp16 vs fp32 的 200 步对照</td><td>loss 曲线差异可解释</td></tr>
+<tr><td>5</td><td>检查 scheduler 在第 2000 步的 lr</td><td>与公式手算一致（±1e-8）</td></tr>
+<tr><td>6–7</td><td>整理训练日志图（loss/lr/grad_norm）</td><td>能解释每个拐点</td></tr>
+</table></div>
+
+<h3>第 3 周 · 把评测与失败分析跑通</h3>
+<div class="tbl"><table>
+<tr><th>天</th><th>任务</th><th>验收</th></tr>
+<tr><td>1–2</td><td>对 2000 步 checkpoint 跑 10×10 评测</td><td>得到 <code>pc_success</code> 与逐任务表</td></tr>
+<tr><td>3</td><td>复算 Wilson 区间，与脚本输出对比</td><td>手算与代码一致</td></tr>
+<tr><td>4</td><td>看 10 个失败视频，建立失败分类表</td><td>每类至少 2 个样本</td></tr>
+<tr><td>5</td><td>对最弱任务扩到 30 episode</td><td>区间宽度缩小到可解释</td></tr>
+<tr><td>6–7</td><td>写 1 页“结果与限制”</td><td>包含 n、区间、协议、归因</td></tr>
+</table></div>
+
+<h3>第 4 周 · 做一个可辩护的改进</h3>
+<p>三选一，不要全做：</p>
+<ul>
+<li><strong>预算阶梯</strong>：8k → 16k，同数据同协议，看成功率是否单调；这是最能回答“差距是否只是训练量”的实验。</li>
+<li><strong>增强消融</strong>：固定密度的 A/B，两 seed；样本量按第 15 章算，至少 200/臂。</li>
+<li><strong>失败驱动</strong>：只对 spatial_5 过采样或加该任务的示范，其他不变；看单任务是否提升且不伤其他任务。</li>
+</ul>
+<p>验收：两页报告（方法、协议、结果、区间、归因、下一步）+ 一次 30 分钟模拟面试（用第 20 章题库随机抽 10 题）。</p>
+
+<h3>命令速查</h3>
+<pre><code># 单卡训练（最小可运行）
+lerobot-train \
+  --policy.path=lerobot/smolvla_base \
+  --dataset.repo_id=lerobot/libero_spatial \
+  --batch_size=32 --steps=2000 --save_freq=500 \
+  --policy.n_action_steps=1 --policy.num_steps=10 \
+  --output_dir=outputs/w2_smoke
+
+# 双卡
+torchrun --nproc_per_node=2 $(which lerobot-train) ... --batch_size=32
+
+# 续训
+lerobot-train ... --resume=true \
+  --config_path=outputs/w2_smoke/checkpoints/00002000/pretrained_model
+
+# 评测
+lerobot-eval \
+  --policy.path=outputs/w2_smoke/checkpoints/00002000/pretrained_model \
+  --env.type=libero --env.task=libero_spatial \
+  --eval.batch_size=10 --eval.n_episodes=10 \
+  --policy.n_action_steps=1 --policy.num_steps=10</code></pre>
+
+<h3>阅读清单（按优先级）</h3>
+<div class="tbl"><table>
+<tr><th>优先级</th><th>材料</th><th>读什么</th></tr>
+<tr><td>必读</td><td>SmolVLA 论文</td><td>方法、训练配方、LIBERO 实验设置、消融</td></tr>
+<tr><td>必读</td><td>π0 论文</td><td>动作专家、流匹配、交错 SA/CA、实时 chunk</td></tr>
+<tr><td>必读</td><td>LIBERO 论文/文档</td><td>四个套件、初始状态、成功判定、最大步数</td></tr>
+<tr><td>推荐</td><td>OpenVLA</td><td>离散动作 token、OXE、LoRA 微调</td></tr>
+<tr><td>推荐</td><td>RT-2</td><td>动作即语言 token、联合微调</td></tr>
+<tr><td>推荐</td><td>ACT / Diffusion Policy</td><td>chunk、CVAE、扩散头，作为基线对照</td></tr>
+<tr><td>进阶</td><td>Flow Matching 原论文</td><td>概率路径、连续性方程（只需直觉）</td></tr>
+<tr><td>进阶</td><td>openpi / big_vision 源码</td><td>cumulative mask 的原始实现</td></tr>
+</table></div>
+
+<div class="part-open">
+  <div class="pnum">Appendix</div>
+  <h2>附录：索引、证据与速查</h2>
+  <p>面试前只看附录 D；写代码时看 A；被质疑数字时看 B。</p>
+</div>
+
+<div class="chnum" id="a1">APPENDIX A</div>
+<h2>代码索引（文件 → 行号 → 用途）</h2>
+<div class="tbl"><table>
+<tr><th>文件</th><th>行号</th><th>用途</th></tr>
+<tr><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/policies/smolvla/configuration_smolvla.py#L26">configuration_smolvla.py</a></td><td>26, 29–30, 45, 60, 69–70, 74, 80–81, 96–98</td><td>配置类、chunk/n_action、resize、tokenizer 长度、冻结、lr、warmup/decay、层数与专家宽度</td></tr>
+<tr><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/policies/smolvla/modeling_smolvla.py#L144">modeling_smolvla.py</a></td><td>144</td><td><code>SmolVLAPolicy</code>：预处理、动作队列、loss 入口</td></tr>
+<tr><td>同上</td><td>236 / 248</td><td><code>predict_action_chunk</code> / <code>select_action</code></td></tr>
+<tr><td>同上</td><td>281</td><td><code>forward</code>：训练与 loss</td></tr>
+<tr><td>同上</td><td>505</td><td><code>VLAFlowMatching</code>：流匹配核心</td></tr>
+<tr><td>同上</td><td>591 / 685</td><td><code>embed_prefix</code> / <code>embed_suffix</code>：token 组装与 att_mask</td></tr>
+<tr><td>同上</td><td>728 / 763 / 812</td><td><code>forward</code>（VLA）/ <code>sample_actions</code> / <code>denoise_step</code></td></tr>
+<tr><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/policies/smolvla/smolvlm_with_expert.py#L74">smolvlm_with_expert.py</a></td><td>74</td><td>两流模型：冻结、KV cache、层循环</td></tr>
+<tr><td>同上</td><td>220 / 294</td><td>自注意力层 / 交叉注意力层</td></tr>
+<tr><td>同上</td><td>414</td><td>主 <code>forward</code>：预填充与去噪</td></tr>
+<tr><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/policies/common/flow_matching.py#L58">flow_matching.py</a></td><td>58, 167, 202</td><td>流约定、Beta 时间采样、速度目标说明</td></tr>
+<tr><td>同上</td><td>256</td><td><code>euler_integrate</code>：积分与符号处理</td></tr>
+<tr><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/policies/smolvla/processor_smolvla.py">processor_smolvla.py</a></td><td>—</td><td>归一化、resize/pad、tokenizer、设备迁移</td></tr>
+<tr><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/datasets/dataset_reader.py#L298">dataset_reader.py</a></td><td>298</td><td><code>_get_query_indices</code>：delta 窗口</td></tr>
+<tr><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/datasets/utils.py#L146">datasets/utils.py</a></td><td>146</td><td><code>delta_window</code>：钳位与 <code>*_is_pad</code></td></tr>
+<tr><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/envs/libero.py#L107">envs/libero.py</a></td><td>98 / 107</td><td>最大步数表 / <code>LiberoEnv</code></td></tr>
+<tr><td>同上</td><td>287 / 339 / 351</td><td>观测格式 / reset 与初始状态 / 10 步预热</td></tr>
+<tr><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/transforms/transforms.py#L1444">transforms/transforms.py</a></td><td>1444 / 1474 / 1603 / 1646</td><td>增强配置 / 变换数上限 / 子集采样 / 执行类</td></tr>
+<tr><td><a href="file:///home/czx/SmolVLA/lerobot/src/lerobot/processor/normalize_processor.py#L429">normalize_processor.py</a></td><td>429</td><td>归一化处理器（MEAN_STD 等）</td></tr>
+</table></div>
+
+<div class="chnum" id="a2">APPENDIX B</div>
+<h2>证据台账：每个数字的出处与状态</h2>
+<div class="tbl"><table>
+<tr><th>结论</th><th>值</th><th>出处</th><th>状态</th></tr>
+<tr><td>训练规模</td><td>8000 updates，有效 batch 64，2×T4</td><td>训练日志 / README</td><td><span class="tag t-exp">已核实</span></td></tr>
+<tr><td>训练时长与 loss</td><td>4h50m；1.14 → ≈0.5</td><td>训练日志</td><td><span class="tag t-exp">已核实</span></td></tr>
+<tr><td>评测成功率</td><td>74/100 = 74%</td><td><code>eval_info.json</code> / 结果表</td><td><span class="tag t-exp">已核实</span></td></tr>
+<tr><td>置信区间</td><td>Wilson 95% [64.6%, 81.6%]</td><td>本书复算</td><td><span class="tag t-exp">已复算</span>；归档值 [63.0%, 83.2%] 口径不符，建议修正</td></tr>
+<tr><td>分任务</td><td>spatial_0…9 = 90/100/80/80/80/30/70/80/70/60</td><td>结果表</td><td><span class="tag t-exp">已核实</span></td></tr>
+<tr><td>与论文预算差</td><td>8k vs 100k = 1/12.5</td><td>SmolVLA 论文实验设置</td><td><span class="tag t-paper">已修正</span>；归档“25×”混淆了预训练 200k 与微调 100k</td></tr>
+<tr><td>论文参照</td><td>spatial 90.0%，四套件均值 87.3%，100k 微调</td><td>SmolVLA 论文 Table 2</td><td><span class="tag t-paper">已核实</span>；spatial 列同套件可比</td></tr>
+<tr><td>数据规模</td><td>40 任务 / 1693 条示范（训练）；评测 10 任务</td><td>训练命令 + 数据集元信息</td><td><span class="tag t-exp">已核实</span>；归档表“单套件”与命令冲突</td></tr>
+<tr><td>推理延迟</td><td>未测</td><td>—</td><td><span class="tag t-inf">空白</span>；不要编造具体毫秒数</td></tr>
+<tr><td>增强消融</td><td>单 seed、配置曾静默失效</td><td>项目复盘</td><td><span class="tag t-inf">限制</span>；结论只能算探索性</td></tr>
+</table></div>
+
+<div class="box warn">
+<div class="bt">如果面试官指出你报告里的旧数字</div>
+<p>不要辩护。直接说：“那版用的是另一种近似/我把预训练步数当成了微调步数，复算后应为 [64.6%, 81.6%] / 12.5×。我已经在最新版修正。” 然后给出复算步骤。这会把“错误”转成“可验证的严谨”。</p>
+</div>
+
+<div class="chnum" id="a3">APPENDIX C</div>
+<h2>符号与术语</h2>
+<div class="tbl"><table>
+<tr><th>符号/术语</th><th>含义</th></tr>
+<tr><td><code>o_t, ℓ</code></td><td>时刻 t 的观测（多相机图像 + 本体状态）与语言指令</td></tr>
+<tr><td><code>a, H, D</code></td><td>动作块、块长（50）、动作维度（7，pad 到 32）</td></tr>
+<tr><td><code>x_t, ε, v</code></td><td>流匹配的插值样本、噪声、速度目标 <code>ε−a</code></td></tr>
+<tr><td><code>att_mask / pad_mask</code></td><td>块边界掩码 / padding 掩码，二者不是一回事</td></tr>
+<tr><td>prefix / suffix</td><td>图像+语言+状态 / 动作 token</td></tr>
+<tr><td><code>n_action_steps</code></td><td>每次预测后开环执行多少步；评测为 1</td></tr>
+<tr><td>update / action step</td><td>梯度更新 / 仿真控制步</td></tr>
+<tr><td>SA / CA</td><td>自注意力 / 交叉注意力（对前缀）</td></tr>
+<tr><td>GQA / RoPE</td><td>分组查询注意力 / 旋转位置编码</td></tr>
+<tr><td>RTC</td><td>Real-Time Chunking，块间重叠与延迟补偿</td></tr>
+<tr><td>Wilson / McNemar</td><td>二项比例区间 / 配对二值检验</td></tr>
+</table></div>
+
+<div class="chnum" id="a4">APPENDIX D</div>
+<h2>一页速查卡（面试前 10 分钟）</h2>
+<div class="cheat">
+<h3>SmolVLA 一句话</h3>
+<p>450M = 冻结的 SmolVLM2 前缀（16 层、宽 960）+ 可训练动作专家（16 层、宽 720），流匹配生成 50×7 动作块，10 步欧拉。</p>
+<h3>关键数字</h3>
+<div class="cols">
+<p><strong>视觉</strong>：512²，patch 16 → 1024 → shuffle → 64/帧</p>
+<p><strong>前缀</strong>：2×64 + 48 + 1 = 177</p>
+<p><strong>后缀</strong>：50；总长 ≤227</p>
+<p><strong>专家</strong>：0.75×960=720；隔层 SA/CA</p>
+<p><strong>训练</strong>：8k updates，bs64，1e-4，warmup 2k，decay 32k</p>
+<p><strong>评测</strong>：10×10，n_action_steps=1，10 步预热</p>
+<p><strong>结果</strong>：74%，Wilson [64.6, 81.6]</p>
+<p><strong>预算</strong>：论文微调 100k → 1/12.5</p>
+</div>
+<h3>四条必背推导</h3>
+<div class="cols">
+<p><strong>流匹配</strong>：<code>x_t=tε+(1−t)a</code>，<code>v=ε−a</code>，MSE 最优 = 条件期望</p>
+<p><strong>积分</strong>：<code>Δt=−0.1</code>，<code>x←x−0.1v</code>；符号反了就发散</p>
+<p><strong>掩码</strong>：cumsum，<code>c_j≤c_i</code> 可见；图像/语言双向，动作因果</p>
+<p><strong>loss</strong>：分母 = 有效步数 × 7，不是 B×50×32</p>
+</div>
+<h3>五个高频陷阱</h3>
+<div class="cols">
+<p><code>att_mask</code> ≠ padding mask</p>
+<p>专家不是第二个 VLM，没有词表</p>
+<p>去噪时 VLM 不重跑，只读 KV cache</p>
+<p>padding 是重复边界帧，不是补零</p>
+<p>74% ≠ 复现 90%；协议/预算/数据都不同</p>
+</div>
+<h3>三个 STAR 标题</h3>
+<div class="cols">
+<p>T4 fp16 迁移：fp32 权重 + autocast + GradScaler + upcast</p>
+<p>会话回收续训：全状态 checkpoint + Hub 备份 + 启动自检</p>
+<p>74% 的可信化：Wilson 复算 + 预算口径修正 + 失败分类</p>
+</div>
+</div>
+
+<div class="foot">
+<p>本教材基于本仓库源码、M1/M2 实验记录与 SmolVLA 论文整理。源码行号对应归档版本 <code>lerobot 0.6.2 @146d8474</code>；升级后请重新核对。<br>
+标记为“推断”的内容未直接实验验证，面试中应明确说明；标记为“限制”的结论不应作为已证实的科学发现。<br>
+建议配合仓库中的 <code>README.md</code>、<code>results/M2_eval_libero_spatial.md</code> 与 <code>paper/SmolVLA_paper.md</code> 一起阅读。</p>
+</div>
+
+</article>
+</div>
+</body>
+</html>
